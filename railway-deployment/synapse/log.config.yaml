@@ -2,7 +2,10 @@ version: 1
 
 formatters:
   precise:
-    format: '%(asctime)s - %(name)s - %(lineno)d - %(levelname)s - %(request)s - %(message)s'
+    format: "%(asctime)s - %(name)s - %(lineno)d - %(levelname)s - %(request)s - %(message)s"
+  json:
+    class: pythonjsonlogger.jsonlogger.JsonFormatter
+    format: "%(asctime)s %(name)s %(lineno)d %(levelname)s %(request)s %(message)s"
 
 handlers:
   console:
@@ -10,16 +13,20 @@ handlers:
     formatter: precise
     stream: ext://sys.stdout
 
+root:
+  level: INFO
+  handlers: [console]
+
 loggers:
   synapse:
     level: INFO
   synapse.storage.SQL:
-    level: INFO
+    level: WARN
   synapse.http.server:
     level: INFO
-
-root:
-  level: INFO
-  handlers: [console]
+  synapse.federation:
+    level: INFO
+  synapse.handlers:
+    level: INFO
 
 disable_existing_loggers: false
