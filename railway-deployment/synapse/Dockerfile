@@ -12,4 +12,4 @@ RUN mkdir -p /data/media_store && \
 EXPOSE 8008
 
 # Start Synapse (use built-in entrypoint)
-CMD ["python", "-m", "synapse.app.homeserver", "-c", "/data/homeserver.yaml"]
+CMD ["synapse", "-m", "synapse.app.homeserver", "-c", "/data/homeserver.yaml"]
