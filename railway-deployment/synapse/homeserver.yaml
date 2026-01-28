@@ -1,0 +1,159 @@
+# Copyright 2025 Your Organization
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# Server name - CRITICAL: Cannot change after first deployment
+server_name: "${SERVER_NAME}"
+
+# Public baseurl for federation and client redirects
+public_baseurl: "https://${RAILWAY_PUBLIC_DOMAIN}"
+
+# Listener configuration
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    bind_addresses: ['0.0.0.0']
+    resources:
+      - names: [client, federation]
+        compress: false
+
+# Database configuration (Railway PostgreSQL)
+database:
+  name: psycopg2
+  args:
+    user: "${PGUSER}"
+    password: "${PGPASSWORD}"
+    database: "${PGDATABASE}"
+    host: "${PGHOST}"
+    port: "${PGPORT}"
+    cp_min: 5
+    cp_max: 10
+    keepalives_idle: 10
+    keepalives_interval: 10
+    keepalives_count: 3
+
+# Logging
+log_config: "/data/log.config.yaml"
+
+# Media storage
+media_store_path: "/data/media_store"
+max_upload_size: "100M"
+max_image_pixels: "32M"
+media_retention:
+  remote_media_lifetime: "90d"
+
+# URL preview settings
+url_preview_enabled: true
+url_preview_ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+  - '100.64.0.0/10'
+  - '192.0.0.0/24'
+  - '169.254.0.0/16'
+  - '198.18.0.0/15'
+  - '192.0.2.0/24'
+  - '198.51.100.0/24'
+  - '203.0.113.0/24'
+  - '224.0.0.0/4'
+  - '::1/128'
+  - 'fe80::/10'
+  - 'fc00::/7'
+max_spider_size: "10M"
+
+# Registration settings
+enable_registration: false
+enable_registration_without_verification: false
+registration_shared_secret: "${REGISTRATION_SHARED_SECRET}"
+
+# Signing keys
+signing_key_path: "/data/keys/signing.key"
+
+# Trusted key servers for federation
+trusted_key_servers:
+  - server_name: "matrix.org"
+
+# Rate limiting
+rc_message:
+  per_second: 0.2
+  burst_count: 10
+rc_registration:
+  per_second: 0.17
+  burst_count: 3
+rc_login:
+  address:
+    per_second: 0.17
+    burst_count: 3
+  account:
+    per_second: 0.17
+    burst_count: 3
+  failed_attempts:
+    per_second: 0.17
+    burst_count: 3
+
+# Federation settings
+federation_domain_whitelist: null
+federation_ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+  - '100.64.0.0/10'
+  - '169.254.0.0/16'
+  - '::1/128'
+  - 'fe80::/64'
+  - 'fc00::/7'
+
+# Presence settings
+presence:
+  enabled: true
+  presence_router:
+    module: "synapse.handlers.presence.PresenceRouter"
+
+# User directory
+user_directory:
+  enabled: true
+  search_all_users: false
+
+# Metrics (optional - Railway provides metrics)
+enable_metrics: false
+
+# Admin contact
+admin_contact: "mailto:${ADMIN_EMAIL}"
+
+# Reporting
+report_stats: false
+
+# Macaroon secret key
+macaroon_secret_key: "${MACAROON_SECRET_KEY}"
+
+# Form secret
+form_secret: "${FORM_SECRET}"
+
+# TURN server configuration (optional - for VoIP)
+turn_uris: []
+turn_shared_secret: ""
+turn_user_lifetime: "1h"
+
+# Retention
+retention:
+  enabled: false
+
+# Push notifications
+push:
+  enabled: true
+
+# Redaction settings
+redaction_retention_period: null
+user_ips_max_age: 28d
+
+# Enable room list search
+allow_public_rooms_without_auth: false
+allow_public_rooms_over_federation: true
+
+# Experimental features
+experimental_features:
+  msc2716_enabled: false
+  msc3026_enabled: false
