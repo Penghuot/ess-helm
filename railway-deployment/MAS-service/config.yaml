@@ -14,17 +14,17 @@ http:
         - name: assets
 
 database:
-  uri: "${{Postgres.DATABASE_URL}}"
+  uri: "postgresql://postgres:eEFsjzqXcmIBuvOWLPXXIPVLJQKlTOkC@postgres.railway.internal:5432/railway"
 
 upstream_oauth2:
   endpoint: "https://synapse-production-e979.up.railway.app/_synapse/oidc/callback"
   registration_shared_secret: "4578b92c30adf6e1"
 
 secrets:
-  encryption: "m8s1aH7B7eX1yq3f0h2mV7vS5Hkq3V6Z4NQvZp5l+0Y="
+  encryption: "c07af15b849e23d6f9a1b4c8d2e6f0a3b7c1d5e9f3a7b1c5d9e3f7a1b5c9d3e7"
   keys:
     - kid: "default"
-      key: "y+1d9pVf2K3n4qk7Q8u3dL2m5s6t7v8w9x0y1z2a3b4="
+      key: "76281ea0c3bfd954a8b2c6d0e4f8a2b6c0d4e8f2a6b0c4d8e2f6a0b4c8d2e6f0"
 
 email:
   from: '"Matrix" <noreply@synapse-production-e979.up.railway.app>'

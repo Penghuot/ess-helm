@@ -25,6 +25,7 @@ database:
     database: railway
     cp_min: 5
     cp_max: 10
+  allow_unsafe_locale: true
 
 # Stats reporting
 report_stats: true
