@@ -14,25 +14,25 @@ listeners:
       - names: [client, federation]
         compress: false
 
-# Database configuration - PostgreSQL
+# Database configuration - PostgreSQL (hardcoded)
 database:
   name: psycopg2
   args:
-    user: ${PGUSER}
-    password: ${PGPASSWORD}
-    host: ${PGHOST}
-    port: ${PGPORT}
-    database: ${PGDATABASE}
+    user: postgres
+    password: eEFsjzqXcmIBuvOWLPXXIPVLJQKlTOkC
+    host: postgres.railway.internal
+    port: 5432
+    database: railway
     cp_min: 5
     cp_max: 10
 
 # Stats reporting
 report_stats: true
 
-# Secrets - use environment variables
-registration_shared_secret: "${REGISTRATION_SHARED_SECRET}"
-macaroon_secret_key: "${MACAROON_SECRET_KEY}"
-form_secret: "${FORM_SECRET}"
+# Secrets - hardcoded
+registration_shared_secret: "4578b92c30adf6e1"
+macaroon_secret_key: "6f01b8a9c5e2d437"
+form_secret: "32f4cb150ed867a9"
 
 # Signing key path
 signing_key_path: "/data/synapse-production-e979.up.railway.app.signing.key"

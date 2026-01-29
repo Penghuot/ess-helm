@@ -21,10 +21,10 @@ upstream_oauth2:
   registration_shared_secret: "4578b92c30adf6e1"
 
 secrets:
-  encryption: "c07af15b849e23d6"
+  encryption: "m8s1aH7B7eX1yq3f0h2mV7vS5Hkq3V6Z4NQvZp5l+0Y="
   keys:
     - kid: "default"
-      key: "76281ea0c3bfd954"
+      key: "y+1d9pVf2K3n4qk7Q8u3dL2m5s6t7v8w9x0y1z2a3b4="
 
 email:
   from: '"Matrix" <noreply@synapse-production-e979.up.railway.app>'
