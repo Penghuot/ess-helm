@@ -1,3 +1,5 @@
-FROM nginx:alpine
-COPY config.json /usr/share/nginx/html/config.json
-COPY element-web /usr/share/nginx/html
+FROM vectorim/element-web:latest
+
+COPY config.json /app/config.json
+
+EXPOSE 80
