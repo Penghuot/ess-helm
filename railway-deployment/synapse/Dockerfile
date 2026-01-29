@@ -2,6 +2,9 @@ FROM matrixdotorg/synapse:latest
 
 USER root
 
+# Create media store directory
+RUN mkdir -p /data/media_store
+
 # Copy configs
 COPY homeserver.yaml /data/homeserver.yaml
 COPY synapse-config/synapse-production-e979.up.railway.app.signing.key /data/synapse-production-e979.up.railway.app.signing.key

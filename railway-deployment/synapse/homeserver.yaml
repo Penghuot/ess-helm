@@ -26,6 +26,7 @@ database:
     cp_min: 5
     cp_max: 10
   allow_unsafe_locale: true
+  synchronous_commit: false
 
 # Stats reporting
 report_stats: true
