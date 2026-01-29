@@ -14,6 +14,15 @@ listeners:
       - names: [client, federation]
         compress: false
 
+# Add direct well-known delegation
+well_known_ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+  - 'fe80::/10'
+  - 'fc00::/7'
+
 # Database configuration - PostgreSQL (hardcoded)
 database:
   name: psycopg2
