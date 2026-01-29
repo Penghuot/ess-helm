@@ -1,5 +1,29 @@
-base_url: "https://mas-service-production.up.railway.app/"
-database_url: ${DATABASE_URL}
-synapse:
-  homeserver_url: "https://synapse-production-e979.up.railway.app"
-  registration_shared_secret: ${REGISTRATION_SHARED_SECRET}
+# MAS Configuration for Railway
+http:
+  public_base: "https://mas-service-production.up.railway.app/"
+  listeners:
+    - name: web
+      bind: "0.0.0.0:8080"
+      proxy_protocol: false
+
+# Database connection
+database:
+  uri: "${DATABASE_URL}"
+
+# Synapse integration
+upstream_oauth2:
+  endpoint: "https://synapse-production-e979.up.railway.app"
+  registration_shared_secret: "${REGISTRATION_SHARED_SECRET}"
+
+# Secrets
+secrets:
+  encryption: "${MAS_ENCRYPTION_SECRET}"
+  keys:
+    - kid: "${MAS_KEY_ID:default}"
+      key: "${MAS_SIGNING_KEY}"
+
+# Email configuration (optional, can be added later)
+email:
+  from: '"Matrix" <noreply@synapse-production-e979.up.railway.app>'
+  reply_to: '"Matrix Support" <support@synapse-production-e979.up.railway.app>'
+  transport: blackhole

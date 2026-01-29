@@ -1,25 +1,52 @@
-server_name: "synapse.up.railway.app"
-public_baseurl: "https://synapse.up.railway.app/"
+# Server configuration
+server_name: "synapse-production-e979.up.railway.app"
+public_baseurl: "https://synapse-production-e979.up.railway.app/"
+pid_file: /data/homeserver.pid
 
-report_stats: false
+# Listener configuration
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    bind_addresses: ['0.0.0.0']
+    resources:
+      - names: [client, federation]
+        compress: false
 
+# Database configuration - PostgreSQL
 database:
   name: psycopg2
   args:
-    user: synapse
+    user: postgres
     password: ${POSTGRES_PASSWORD}
     host: ${POSTGRES_HOST}
-    port: ${POSTGRES_PORT}
-    database: ${POSTGRES_DB}
+    port: ${POSTGRES_PORT:5432}
+    database: ${POSTGRES_DB:railway}
+    cp_min: 5
+    cp_max: 10
 
-secrets:
-  registration_shared_secret: ${REGISTRATION_SHARED_SECRET}
-  macaroon_secret_key: "qh,..EdAkeXZe~cXqc;3*diyJ-pi~lyIE2gRR5wPfnumlufJ65"
-  form_secret: "4Y;_n~m:a9kaAJ;FEle,J3l-m_YA8#q6a0dGx~^7s3o&Mh~p@9"
-  signing_keys:
-    - key_id: "ed25519:auto"
-      algorithm: "ed25519"
-      private_key: |
-        -----BEGIN PRIVATE KEY----- 
-        TESTPRIVATEKEYSTRINGHARDCODEDFORRAILWAY 
-        -----END PRIVATE KEY-----
+# Stats reporting
+report_stats: true
+
+# Secrets - use environment variables
+registration_shared_secret: "${REGISTRATION_SHARED_SECRET}"
+macaroon_secret_key: "${MACAROON_SECRET_KEY}"
+form_secret: "${FORM_SECRET}"
+
+# Signing key path
+signing_key_path: "/data/synapse-production-e979.up.railway.app.signing.key"
+
+# Trusted key servers
+trusted_key_servers:
+  - server_name: "matrix.org"
+
+# Media storage
+media_store_path: /data/media_store
+
+# Enable registration (you can disable this after creating your admin account)
+enable_registration: true
+enable_registration_without_verification: true
+
+# Log configuration
+log_config: "/data/synapse-production-e979.up.railway.app.log.config"

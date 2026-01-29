@@ -1,0 +1,25 @@
+#!/bin/bash
+# Quick Secret Generation Script for Railway Deployment
+
+echo "🔐 Generating secrets for Railway deployment..."
+echo ""
+echo "================================================"
+echo "COPY THESE VALUES TO YOUR RAILWAY ENVIRONMENT VARIABLES"
+echo "================================================"
+echo ""
+
+echo "REGISTRATION_SHARED_SECRET=$(openssl rand -hex 32)"
+echo "MACAROON_SECRET_KEY=$(openssl rand -hex 32)"
+echo "FORM_SECRET=$(openssl rand -hex 32)"
+echo "MAS_ENCRYPTION_SECRET=$(openssl rand -hex 32)"
+echo "MAS_SIGNING_KEY=$(openssl rand -hex 32)"
+echo ""
+echo "================================================"
+echo "✅ Secrets generated successfully!"
+echo ""
+echo "Next steps:"
+echo "1. Copy the values above"
+echo "2. Go to your Railway project"
+echo "3. Add these as environment variables to the respective services"
+echo "4. Deploy your services"
+echo ""
