@@ -3,11 +3,13 @@ FROM matrixdotorg/synapse:latest
 # Switch to root to set up directories and permissions
 USER root
 
-# Copy the generated synapse config
-COPY synapse-config /data
+# Copy config files into the image (will be synced to /data at startup)
+COPY synapse-config /config
+COPY homeserver.yaml /config/homeserver.yaml
 
-# Copy your custom homeserver.yaml to override defaults
-COPY homeserver.yaml /data/homeserver.yaml
+# Startup script to sync config into /data (handles persistent volumes)
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Create necessary directories with proper permissions
 RUN mkdir -p /data/media_store && \
@@ -20,5 +22,5 @@ USER 991
 # Expose port 8008
 EXPOSE 8008
 
-# Use the default synapse entrypoint (no CMD override)
-# The base image will start synapse automatically with the config
+# Use custom entrypoint to ensure config is synced into /data
+ENTRYPOINT ["/entrypoint.sh"]

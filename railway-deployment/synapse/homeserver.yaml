@@ -9,7 +9,7 @@ listeners:
     tls: false
     type: http
     x_forwarded: true
-    bind_addresses: ['0.0.0.0']
+    bind_addresses: ["0.0.0.0"]
     resources:
       - names: [client, federation]
         compress: false
@@ -21,8 +21,8 @@ database:
     user: postgres
     password: ${POSTGRES_PASSWORD}
     host: ${POSTGRES_HOST}
-    port: ${POSTGRES_PORT:5432}
-    database: ${POSTGRES_DB:railway}
+    port: ${POSTGRES_PORT}
+    database: ${POSTGRES_DB}
     cp_min: 5
     cp_max: 10
 

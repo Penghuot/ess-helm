@@ -6,7 +6,12 @@ http:
         - address: "0.0.0.0:8080"
       proxy_protocol: false
       resources:
-        - names: [client, federation, metrics]
+        - name: discovery
+        - name: human
+        - name: oauth
+        - name: compat
+        - name: graphql
+        - name: assets
 
 database:
   uri: "${DATABASE_URL}"
@@ -18,7 +23,7 @@ upstream_oauth2:
 secrets:
   encryption: "${MAS_ENCRYPTION_SECRET}"
   keys:
-    - kid: "${MAS_KEY_ID:default}"
+    - kid: "${MAS_KEY_ID}"
       key: "${MAS_SIGNING_KEY}"
 
 email:
