@@ -1,0 +1,11 @@
+[build]
+builder = "docker"
+
+[deploy]
+restart_policy = "always"
+
+[env]
+BASE_URL = "https://mas.up.railway.app"
+DATABASE_URL = "${{DATABASE_URL}}"
+SYNAPSE_URL = "https://synapse.up.railway.app"
+REGISTRATION_SHARED_SECRET = "changeme-secret"

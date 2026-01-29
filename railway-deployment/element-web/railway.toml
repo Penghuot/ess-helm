@@ -1,0 +1,9 @@
+[build]
+builder = "docker"
+
+[deploy]
+restart_policy = "always"
+
+[env]
+SYNAPSE_URL = "https://synapse.up.railway.app"
+MAS_URL = "https://mas.up.railway.app"

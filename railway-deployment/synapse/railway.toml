@@ -1,0 +1,11 @@
+[build]
+builder = "docker"
+
+[deploy]
+restart_policy = "always"
+
+[env]
+SYNAPSE_SERVER_NAME = "synapse.up.railway.app"
+PUBLIC_BASEURL = "https://synapse.up.railway.app/"
+DATABASE_URL = "${{DATABASE_URL}}"
+REGISTRATION_SHARED_SECRET = "changeme-secret"
