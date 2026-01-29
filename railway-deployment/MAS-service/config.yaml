@@ -14,17 +14,17 @@ http:
         - name: assets
 
 database:
-  uri: "${DATABASE_URL}"
+  uri: "${{Postgres.DATABASE_URL}}"
 
 upstream_oauth2:
   endpoint: "https://synapse-production-e979.up.railway.app/_synapse/oidc/callback"
-  registration_shared_secret: "${REGISTRATION_SHARED_SECRET}"
+  registration_shared_secret: "4578b92c30adf6e1"
 
 secrets:
-  encryption: "${MAS_ENCRYPTION_SECRET}"
+  encryption: "c07af15b849e23d6"
   keys:
-    - kid: "${MAS_KEY_ID}"
-      key: "${MAS_SIGNING_KEY}"
+    - kid: "default"
+      key: "76281ea0c3bfd954"
 
 email:
   from: '"Matrix" <noreply@synapse-production-e979.up.railway.app>'

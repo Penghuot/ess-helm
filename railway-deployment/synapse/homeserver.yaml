@@ -18,11 +18,11 @@ listeners:
 database:
   name: psycopg2
   args:
-    user: postgres
-    password: ${POSTGRES_PASSWORD}
-    host: ${POSTGRES_HOST}
-    port: ${POSTGRES_PORT}
-    database: ${POSTGRES_DB}
+    user: ${PGUSER}
+    password: ${PGPASSWORD}
+    host: ${PGHOST}
+    port: ${PGPORT}
+    database: ${PGDATABASE}
     cp_min: 5
     cp_max: 10
 
@@ -40,6 +40,9 @@ signing_key_path: "/data/synapse-production-e979.up.railway.app.signing.key"
 # Trusted key servers
 trusted_key_servers:
   - server_name: "matrix.org"
+
+# Suppress key server warning for matrix.org
+suppress_key_server_warning: true
 
 # Media storage
 media_store_path: /data/media_store
