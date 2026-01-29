@@ -14,4 +14,12 @@ database:
 
 secrets:
   registration_shared_secret: ${REGISTRATION_SHARED_SECRET}
-  signing_key_path: "/data/synapse.signing.key"
+  macaroon_secret_key: "qh,..EdAkeXZe~cXqc;3*diyJ-pi~lyIE2gRR5wPfnumlufJ65"
+  form_secret: "4Y;_n~m:a9kaAJ;FEle,J3l-m_YA8#q6a0dGx~^7s3o&Mh~p@9"
+  signing_keys:
+    - key_id: "ed25519:auto"
+      algorithm: "ed25519"
+      private_key: |
+        -----BEGIN PRIVATE KEY----- 
+        TESTPRIVATEKEYSTRINGHARDCODEDFORRAILWAY 
+        -----END PRIVATE KEY-----
