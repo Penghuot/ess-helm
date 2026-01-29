@@ -20,6 +20,3 @@ USER 991
 # Expose port 8008
 EXPOSE 8008
 
-# Run synapse
-CMD ["run"]
-

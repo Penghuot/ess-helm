@@ -3,7 +3,15 @@ http:
   public_base: "https://mas-service-production.up.railway.app/"
   listeners:
     - name: web
-      bind: "0.0.0.0:8080"
+      resources:
+        - name: discovery
+        - name: human
+        - name: oauth
+        - name: compat
+        - name: graphql
+        - name: assets
+      binds:
+        - address: "0.0.0.0:8080"
       proxy_protocol: false
 
 # Database connection
