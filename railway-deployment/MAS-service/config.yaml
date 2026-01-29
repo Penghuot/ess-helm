@@ -14,7 +14,7 @@ http:
         - name: assets
 
 database:
-  uri: "postgresql://postgres:eEFsjzqXcmIBuvOWLPXXIPVLJQKlTOkC@postgres.railway.internal:5432/railway"
+  uri: "postgresql://postgres:wHNhQGDToDcZJfzOxEOCjSYnSooDySqt@postgres-h2zw.railway.internal:5432/railway"
 
 matrix:
   homeserver: "synapse-production-e979.up.railway.app"
