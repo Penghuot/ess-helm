@@ -5,7 +5,7 @@ builder = "docker"
 restart_policy = "always"
 
 [env]
-BASE_URL = "https://mas.up.railway.app"
+BASE_URL = "https://mas-service-production.up.railway.app"
 DATABASE_URL = "${{DATABASE_URL}}"
-SYNAPSE_URL = "https://synapse.up.railway.app"
+SYNAPSE_URL = "https://synapse-production-e979.up.railway.app"
 REGISTRATION_SHARED_SECRET = "changeme-secret"

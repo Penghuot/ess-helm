@@ -1,6 +1,6 @@
 {
   "default_server_config": {
-    "mhs_url": "https://synapse.up.railway.app",
-    "mas_url": "https://mas.up.railway.app"
+    "mhs_url": "https://synapse-production-e979.up.railway.app",
+    "mas_url": "https://mas-service-production.up.railway.app"
   }
 }

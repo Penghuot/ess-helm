@@ -1,0 +1,5 @@
+base_url: "https://mas-service-production.up.railway.app/"
+database_url: ${DATABASE_URL}
+synapse:
+  homeserver_url: "https://synapse-production-e979.up.railway.app"
+  registration_shared_secret: ${REGISTRATION_SHARED_SECRET}
