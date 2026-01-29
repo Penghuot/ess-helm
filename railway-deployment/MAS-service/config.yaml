@@ -16,6 +16,11 @@ http:
 database:
   uri: "postgresql://postgres:eEFsjzqXcmIBuvOWLPXXIPVLJQKlTOkC@postgres.railway.internal:5432/railway"
 
+matrix:
+  homeserver: "synapse-production-e979.up.railway.app"
+  endpoint: "https://synapse-production-e979.up.railway.app"
+  secret: "4578b92c30adf6e1"
+
 upstream_oauth2:
   endpoint: "https://synapse-production-e979.up.railway.app/_synapse/oidc/callback"
   registration_shared_secret: "4578b92c30adf6e1"
