@@ -1,5 +1,6 @@
 server_name: "synapse.up.railway.app"
 public_baseurl: "https://synapse.up.railway.app/"
+report_stats: false
 database:
   name: psycopg2
   args:
