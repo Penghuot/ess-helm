@@ -1,36 +1,26 @@
-# MAS Configuration for Railway
 http:
-  public_base: "https://mas-service-production.up.railway.app/"
+  public_base: "https://mas-service-production.up.railway.app"
   listeners:
     - name: web
-      resources:
-        - name: discovery
-        - name: human
-        - name: oauth
-        - name: compat
-        - name: graphql
-        - name: assets
       binds:
         - address: "0.0.0.0:8080"
       proxy_protocol: false
+      resources:
+        - names: [client, federation, metrics]
 
-# Database connection
 database:
   uri: "${DATABASE_URL}"
 
-# Synapse integration
 upstream_oauth2:
-  endpoint: "https://synapse-production-e979.up.railway.app"
+  endpoint: "https://synapse-production-e979.up.railway.app/_synapse/oidc/callback"
   registration_shared_secret: "${REGISTRATION_SHARED_SECRET}"
 
-# Secrets
 secrets:
   encryption: "${MAS_ENCRYPTION_SECRET}"
   keys:
     - kid: "${MAS_KEY_ID:default}"
       key: "${MAS_SIGNING_KEY}"
 
-# Email configuration (optional, can be added later)
 email:
   from: '"Matrix" <noreply@synapse-production-e979.up.railway.app>'
   reply_to: '"Matrix Support" <support@synapse-production-e979.up.railway.app>'
