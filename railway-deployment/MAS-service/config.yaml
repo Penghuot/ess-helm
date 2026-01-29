@@ -22,7 +22,7 @@ matrix:
   secret: "4578b92c30adf6e1"
 
 upstream_oauth2:
-  issuer: "https://synapse-production-e979.up.railway.app/"
+  providers: []
 
 clients:
   - client_id: "0000000000000000000SYNAPSE"
