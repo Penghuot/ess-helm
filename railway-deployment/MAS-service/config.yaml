@@ -1,5 +1,5 @@
 http:
-  public_base: "https://mas-service-production.up.railway.app"
+  public_base: "https://mas-service-production.up.railway.app/"
   listeners:
     - name: web
       binds:
@@ -22,8 +22,12 @@ matrix:
   secret: "4578b92c30adf6e1"
 
 upstream_oauth2:
-  endpoint: "https://synapse-production-e979.up.railway.app/_synapse/oidc/callback"
-  registration_shared_secret: "4578b92c30adf6e1"
+  issuer: "https://synapse-production-e979.up.railway.app/"
+
+clients:
+  - client_id: "0000000000000000000SYNAPSE"
+    client_auth_method: "client_secret_basic"
+    client_secret: "4578b92c30adf6e1"
 
 secrets:
   encryption: "c07af15b849e23d6f9a1b4c8d2e6f0a3b7c1d5e9f3a7b1c5d9e3f7a1b5c9d3e7"
@@ -35,3 +39,12 @@ email:
   from: '"Matrix" <noreply@synapse-production-e979.up.railway.app>'
   reply_to: '"Matrix Support" <support@synapse-production-e979.up.railway.app>'
   transport: blackhole
+
+passwords:
+  enabled: true
+  schemes:
+    - version: 1
+      algorithm: argon2id
+
+branding:
+  service_name: "Matrix Authentication Service"
