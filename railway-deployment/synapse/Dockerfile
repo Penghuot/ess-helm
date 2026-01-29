@@ -1,7 +1,3 @@
 FROM matrixdotorg/synapse:latest
-
-# Copy your config into the expected location
+RUN mkdir -p /data && chown -R synapse:synapse /data
 COPY homeserver.yaml /data/homeserver.yaml
-
-# Let the image’s default entrypoint run Synapse
-# (no CMD override needed)
