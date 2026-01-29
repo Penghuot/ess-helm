@@ -20,3 +20,5 @@ USER 991
 # Expose port 8008
 EXPOSE 8008
 
+# Use the default synapse entrypoint (no CMD override)
+# The base image will start synapse automatically with the config
