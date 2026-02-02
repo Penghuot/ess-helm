@@ -11,12 +11,7 @@ FROM ghcr.io/matrix-org/matrix-authentication-service:latest
 
 # Copy configuration template and entrypoint
 COPY MAS-service/config.yaml.template /config.yaml.template
-COPY MAS-service/entrypoint.sh /entrypoint.sh
-
-# Make entrypoint executable
-USER root
-RUN chmod +x /entrypoint.sh
-USER mas
+COPY --chmod=755 MAS-service/entrypoint.sh /entrypoint.sh
 
 # Expose MAS port
 EXPOSE 8080
