@@ -7,7 +7,7 @@
 # - MAS_ENCRYPTION_SECRET, MAS_SIGNING_KEY
 # ============================================================================
 
-FROM ghcr.io/matrix-org/matrix-authentication-service:debian
+FROM ghcr.io/matrix-org/matrix-authentication-service:latest
 
 # Copy configuration template and entrypoint
 COPY MAS-service/config.yaml.template /config.yaml.template

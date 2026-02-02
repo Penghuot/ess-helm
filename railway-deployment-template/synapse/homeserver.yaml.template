@@ -36,7 +36,7 @@ database:
     user: "${PGUSER}"
     password: "${PGPASSWORD}"
     host: "${PGHOST}"
-    port: ${PGPORT}
+    port: ${PGPORT:-5432}
     database: "${PGDATABASE}"
     cp_min: 5
     cp_max: 10
@@ -44,7 +44,7 @@ database:
   synchronous_commit: false
 
 # Stats reporting
-report_stats: ${SYNAPSE_REPORT_STATS:-true}
+report_stats: "${SYNAPSE_REPORT_STATS:-true}"
 registration_shared_secret: "${SYNAPSE_REGISTRATION_SHARED_SECRET}"
 macaroon_secret_key: "${SYNAPSE_MACAROON_SECRET_KEY}"
 form_secret: "${SYNAPSE_FORM_SECRET}"
@@ -63,12 +63,12 @@ suppress_key_server_warning: true
 media_store_path: /data/media_store
 
 # Enable registration
-enable_registration: ${SYNAPSE_ENABLE_REGISTRATION:-true}
-enable_registration_without_verification: ${SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION:-true}
+enable_registration: "${SYNAPSE_ENABLE_REGISTRATION:-true}"
+enable_registration_without_verification: "${SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION:-true}"
 
 # Log configuration
 log_config: "/data/log.config.yaml"
 
 # Presence (can disable to reduce load)
 presence:
-  enabled: ${SYNAPSE_PRESENCE_ENABLED:-true}
+  enabled: "${SYNAPSE_PRESENCE_ENABLED:-true}"
