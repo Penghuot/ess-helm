@@ -8,7 +8,7 @@
 FROM vectorim/element-web:latest
 
 # Copy configuration file
-COPY config.json.template /app/config.json
+COPY element-web/config.json.template /app/config.json
 
 # Expose HTTP port
 EXPOSE 80

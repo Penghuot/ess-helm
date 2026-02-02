@@ -10,8 +10,8 @@
 FROM ghcr.io/matrix-org/matrix-authentication-service:latest
 
 # Copy configuration template and entrypoint
-COPY config.yaml.template /config.yaml.template
-COPY entrypoint.sh /entrypoint.sh
+COPY MAS-service/config.yaml.template /config.yaml.template
+COPY MAS-service/entrypoint.sh /entrypoint.sh
 
 # Make entrypoint executable
 USER root
