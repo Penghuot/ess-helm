@@ -1,21 +1,16 @@
 # ============================================================================
 # MAS Configuration Template
 # ============================================================================
-# This template uses environment variables for all sensitive configuration.
-# The entrypoint.sh script substitutes ${VARIABLE} placeholders.
-#
-# DO NOT hardcode secrets in this file!
+# Environment variables are substituted at runtime by entrypoint.sh
 # ============================================================================
 
-# HTTP listener configuration
 http:
+  public_base: "${MAS_PUBLIC_BASE}"
   listeners:
     - name: web
-      # Bind to all interfaces for Railway networking
-      bind: "0.0.0.0:${MAS_HTTP_PORT:-8080}"
-      # Public URL must match Railway deployment
-      public_base: "${MAS_PUBLIC_BASE}"
-      # Enable all resources
+      binds:
+        - address: "0.0.0.0:8080"
+      proxy_protocol: false
       resources:
         - name: discovery
         - name: human
@@ -24,130 +19,42 @@ http:
         - name: graphql
         - name: assets
 
-# Database configuration (separate PostgreSQL instance from Synapse)
 database:
-  uri: "postgresql://${MAS_PGUSER}:${MAS_PGPASSWORD}@${MAS_PGHOST}:${MAS_PGPORT:-5432}/${MAS_PGDATABASE}?sslmode=prefer"
-  max_connections: 10
-  min_connections: 0
-  connect_timeout: 30
-  idle_timeout: 600
-  max_lifetime: 1800
+  uri: "${DATABASE_URL}"
 
-# Secrets configuration
 secrets:
-  # Encryption secret (generate with: openssl rand -hex 64)
   encryption: "${MAS_ENCRYPTION_SECRET}"
-  
-  # Signing keys for JWT tokens
   keys:
-    - kid: "${MAS_KEY_ID:-default}"
-      # EC private key in PEM format
-      # Generate with: openssl ecparam -name prime256v1 -genkey -noout
-      private_key: |
-        ${MAS_SIGNING_KEY}
+    - kid: "default"
+      key: |
+${MAS_SIGNING_KEY}
 
-# Matrix homeserver integration
 matrix:
-  # Homeserver domain (must match Synapse server_name)
   homeserver: "${MAS_MATRIX_HOMESERVER}"
-  
-  # Synapse public URL
   endpoint: "${MAS_MATRIX_ENDPOINT}"
-  
-  # Shared secret for admin registration
-  # MUST match Synapse's registration_shared_secret
   secret: "${MAS_MATRIX_SECRET}"
 
-# Email configuration (optional but recommended)
-email:
-  from: "${MAS_EMAIL_FROM:-Matrix <noreply@example.com>}"
-  reply_to: "${MAS_EMAIL_REPLY_TO:-Support <support@example.com>}"
-  
-  # SMTP transport
-  transport: smtp
-  
-  # SMTP configuration
-  hostname: "${MAS_SMTP_HOST}"
-  port: ${MAS_SMTP_PORT:-587}
-  mode: ${MAS_SMTP_MODE:-starttls}
-  username: "${MAS_SMTP_USERNAME}"
-  password: "${MAS_SMTP_PASSWORD}"
-
-# Templates configuration
-templates:
-  # Use builtin templates
-  builtin: true
-  
-  # Optional: Path to custom templates
-  # path: /config/templates
-
-# Assets configuration
-assets:
-  # Use builtin assets
-  builtin: true
-
-# OAuth 2.0 upstream providers (optional, for social login)
 upstream_oauth2:
-  # Add providers like Google, GitHub, etc.
   providers: []
-  # Example:
-  # - id: google
-  #   issuer: https://accounts.google.com
-  #   client_id: "${GOOGLE_CLIENT_ID}"
-  #   client_secret: "${GOOGLE_CLIENT_SECRET}"
-  #   scope: openid email profile
-  #   token_endpoint_auth_method: client_secret_basic
 
-# OAuth 2.0 clients configuration
 clients:
-  # Synapse as OAuth client
-  - client_id: "${MAS_CLIENT_ID:-0000000000000000000SYNAPSE}"
-    # Must match Synapse's client_secret in msc3861 config
+  - client_id: "0000000000000000000SYNAPSE"
+    client_auth_method: "client_secret_basic"
     client_secret: "${MAS_CLIENT_SECRET}"
-    client_auth_method: client_secret_basic
-    
-    # Redirect URIs for Synapse
-    redirect_uris:
-      - "${MAS_MATRIX_ENDPOINT}/_synapse/client/oidc/callback"
 
-# Branding configuration
+email:
+  from: '"Matrix" <noreply@${MAS_MATRIX_HOMESERVER}>'
+  reply_to: '"Matrix Support" <support@${MAS_MATRIX_HOMESERVER}>'
+  transport: blackhole
+
+passwords:
+  enabled: true
+  schemes:
+    - version: 1
+      algorithm: argon2id
+
 branding:
-  service_name: "${MAS_BRAND_NAME:-Matrix Authentication Service}"
-  # Optional: Custom logo, colors, etc.
-  # logo_uri: https://example.com/logo.png
-  # tos_uri: https://example.com/terms
-  # policy_uri: https://example.com/privacy
-
-# Account management URLs
-account:
-  # Users will be redirected here for account settings
-  management_url: "${MAS_PUBLIC_BASE}account"
-  
-  # Password management (if using local passwords)
-  password_change_allowed: ${MAS_PASSWORD_CHANGE_ALLOWED:-true}
-  password_registration_enabled: ${MAS_PASSWORD_REGISTRATION_ENABLED:-true}
-  email_change_allowed: ${MAS_EMAIL_CHANGE_ALLOWED:-true}
-
-# Session configuration
-session:
-  # Session lifetime (in seconds)
-  ttl: ${MAS_SESSION_TTL:-3600}
-  
-  # Idle timeout (in seconds)
-  idle_ttl: ${MAS_SESSION_IDLE_TTL:-300}
-
-# Rate limiting
-rate_limiting:
-  enabled: ${MAS_RATE_LIMITING_ENABLED:-true}
-  
-  # Authentication attempts
-  auth:
-    per_second: ${MAS_RATE_LIMIT_AUTH_PER_SECOND:-0.1}
-    burst: ${MAS_RATE_LIMIT_AUTH_BURST:-5}
-  
-  # Registration attempts
-  registration:
-    per_second: ${MAS_RATE_LIMIT_REGISTRATION_PER_SECOND:-0.05}
+  service_name: "Matrix Authentication Service"
     burst: ${MAS_RATE_LIMIT_REGISTRATION_BURST:-3}
 
 # Captcha configuration (optional, for bot protection)

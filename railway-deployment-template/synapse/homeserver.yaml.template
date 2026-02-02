@@ -1,16 +1,13 @@
 # ============================================================================
 # Synapse Configuration Template
 # ============================================================================
-# This is a template file that uses environment variables for all sensitive
-# values. The entrypoint.sh script will substitute ${VARIABLE} placeholders
-# with actual values from Railway environment variables.
-#
-# DO NOT hardcode secrets in this file!
+# Environment variables are substituted at runtime by entrypoint.sh
 # ============================================================================
 
-# Server identification
+# Server configuration
 server_name: "${SYNAPSE_SERVER_NAME}"
 public_baseurl: "${SYNAPSE_PUBLIC_BASEURL}"
+pid_file: /data/homeserver.pid
 
 # Listener configuration
 listeners:
@@ -18,85 +15,61 @@ listeners:
     tls: false
     type: http
     x_forwarded: true
-    bind_addresses: ['0.0.0.0']
+    bind_addresses: ["0.0.0.0"]
     resources:
       - names: [client, federation]
         compress: false
 
-# Database configuration (PostgreSQL)
+# IP range blacklist for well-known delegation
+well_known_ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+  - 'fe80::/10'
+  - 'fc00::/7'
+
+# Database configuration - PostgreSQL
 database:
   name: psycopg2
   args:
-    user: "${PGUSER}"
-    password: "${PGPASSWORD}"
-    database: "${PGDATABASE}"
-    host: "${PGHOST}"
+    user: ${PGUSER}
+    password: ${PGPASSWORD}
+    host: ${PGHOST}
     port: ${PGPORT}
+    database: ${PGDATABASE}
     cp_min: 5
     cp_max: 10
-  # Railway uses UTF-8 locale
   allow_unsafe_locale: true
+  synchronous_commit: false
 
-# Media storage
-media_store_path: "/data/media_store"
-uploads_path: "/data/uploads"
-max_upload_size: "50M"
-max_image_pixels: "32M"
+# Stats reporting
+report_stats: ${SYNAPSE_REPORT_STATS:-true}
 
-# URL preview (optional, can disable to save resources)
-url_preview_enabled: true
-url_preview_ip_range_blacklist:
-  - '127.0.0.0/8'
-  - '10.0.0.0/8'
-  - '172.16.0.0/12'
-  - '192.168.0.0/16'
-  - '::1/128'
-  - 'fe80::/10'
-  - 'fc00::/7'
-
-# Federation security
-federation_ip_range_blacklist:
-  - '127.0.0.0/8'
-  - '10.0.0.0/8'
-  - '172.16.0.0/12'
-  - '192.168.0.0/16'
-  - '::1/128'
-  - 'fe80::/10'
-  - 'fc00::/7'
-
-# Registration settings (use environment variable for flexibility)
-enable_registration: ${SYNAPSE_ENABLE_REGISTRATION:-false}
-enable_registration_without_verification: ${SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION:-false}
-
-# Admin registration (for creating users via MAS or admin API)
+# Secrets
 registration_shared_secret: "${SYNAPSE_REGISTRATION_SHARED_SECRET}"
-
-# Security secrets
 macaroon_secret_key: "${SYNAPSE_MACAROON_SECRET_KEY}"
 form_secret: "${SYNAPSE_FORM_SECRET}"
 
-# Signing keys for federation
-signing_key_path: "/data/signing.key"
+# Signing key path
+signing_key_path: "/data/${SYNAPSE_SERVER_NAME}.signing.key"
 
-# Trust MAS for authentication
-experimental_features:
-  msc3861:
-    enabled: true
-    issuer: "${MAS_PUBLIC_BASE}"
-    client_id: "${MAS_CLIENT_ID}"
-    client_auth_method: client_secret_basic
-    client_secret: "${MAS_CLIENT_SECRET}"
-    admin_token: "${SYNAPSE_ADMIN_TOKEN}"
-    account_management_url: "${MAS_PUBLIC_BASE}account"
+# Trusted key servers
+trusted_key_servers:
+  - server_name: "matrix.org"
 
-# Performance tuning
-caches:
-  global_factor: 1.0
-  per_cache_factors:
-    get_users_who_share_room_with_user: 2.0
+# Suppress key server warning for matrix.org
+suppress_key_server_warning: true
 
-# Logging
-log_config: "/config/log.config.yaml"
+# Media storage
+media_store_path: /data/media_store
+
+# Enable registration
+enable_registration: ${SYNAPSE_ENABLE_REGISTRATION:-true}
+enable_registration_without_verification: ${SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION:-true}
+
+# Log configuration
+log_config: "/data/log.config.yaml"
 
 # Report stats (optional, set to false for privacy)
 report_stats: ${SYNAPSE_REPORT_STATS:-false}
