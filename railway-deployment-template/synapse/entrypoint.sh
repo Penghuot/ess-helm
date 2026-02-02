@@ -51,8 +51,7 @@ if [ -n "$SYNAPSE_SIGNING_KEY" ]; then
 elif [ ! -f "$SIGNING_KEY_PATH" ]; then
     echo "Generating new signing key..."
     python -m synapse.app.homeserver \
-        --server-name="$SYNAPSE_SERVER_NAME" \
-        --config-path=/data/homeserver.yaml \
+        -c /data/homeserver.yaml \
         --generate-keys
     echo "✓ New signing key generated"
     echo "IMPORTANT: Save this key to SYNAPSE_SIGNING_KEY environment variable"
@@ -66,6 +65,4 @@ echo "Server Name: $SYNAPSE_SERVER_NAME"
 echo "Public URL: $SYNAPSE_PUBLIC_BASEURL"
 echo "=================================================="
 
-exec python -m synapse.app.homeserver \
-    --server-name="$SYNAPSE_SERVER_NAME" \
-    --config-path=/data/homeserver.yaml
+exec python -m synapse.app.homeserver -c /data/homeserver.yaml
