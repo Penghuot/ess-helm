@@ -1,8 +1,5 @@
 #!/bin/sh
-set -e
-
-echo "Generating config.yaml from template..."
+# Render config.yaml from env vars at runtime
 envsubst < /config.yaml.template > /config.yaml
-echo "✓ config.yaml generated"
 
 exec mas-cli server -c /config.yaml
