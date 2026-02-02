@@ -13,9 +13,9 @@ FROM matrixdotorg/synapse:latest
 USER root
 
 # Install envsubst for environment variable substitution
-# RUN apt-get update && \
-#     apt-get install -y gettext-base && \
-#     rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y gettext-base && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create media store directory
 RUN mkdir -p /data/media_store && chown -R 991:991 /data

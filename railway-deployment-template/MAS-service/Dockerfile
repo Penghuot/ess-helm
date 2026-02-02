@@ -16,5 +16,5 @@ COPY --chmod=755 MAS-service/entrypoint.sh /entrypoint.sh
 # Expose MAS port
 EXPOSE 8080
 
-# Use custom entrypoint to substitute env vars
-ENTRYPOINT ["/entrypoint.sh"]
+# Use shell to run the entrypoint script
+ENTRYPOINT ["/bin/sh", "/entrypoint.sh"]
