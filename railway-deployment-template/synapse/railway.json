@@ -5,7 +5,7 @@
     "dockerfilePath": "synapse/Dockerfile"
   },
   "deploy": {
-    "startCommand": "/entrypoint.sh run",
+    "startCommand": "/entrypoint.sh",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10,
     "healthcheckPath": "/_matrix/static/",

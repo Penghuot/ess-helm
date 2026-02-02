@@ -48,6 +48,8 @@ report_stats: "${SYNAPSE_REPORT_STATS:-true}"
 registration_shared_secret: "${SYNAPSE_REGISTRATION_SHARED_SECRET}"
 macaroon_secret_key: "${SYNAPSE_MACAROON_SECRET_KEY}"
 form_secret: "${SYNAPSE_FORM_SECRET}"
+password_pepper: "${SYNAPSE_PASSWORD_PEPPER}"
+admin_token: "${SYNAPSE_ADMIN_TOKEN}"
 
 # Signing key path
 signing_key_path: "/data/${SYNAPSE_SERVER_NAME}.signing.key"
