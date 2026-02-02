@@ -1,5 +1,5 @@
 http:
-  public_base: ${MAS_PUBLIC_BASE}
+  public_base: "${MAS_PUBLIC_BASE}"
   listeners:
     - name: web
       binds:
@@ -14,19 +14,19 @@ http:
         - name: assets
 
 database:
-  uri: ${DATABASE_URL}
+  uri: "${DATABASE_URL}"
 
 secrets:
-  encryption: ${MAS_ENCRYPTION_SECRET}
+  encryption: "${MAS_ENCRYPTION_SECRET}"
   keys:
     - kid: "default"
       key: |
         ${MAS_SIGNING_KEY}
 
 matrix:
-  homeserver: ${MAS_MATRIX_HOMESERVER}
-  endpoint: ${MAS_MATRIX_ENDPOINT}
-  secret: ${MAS_MATRIX_SECRET}
+  homeserver: "${MAS_MATRIX_HOMESERVER}"
+  endpoint: "${MAS_MATRIX_ENDPOINT}"
+  secret: "${MAS_MATRIX_SECRET}"
 
 upstream_oauth2:
   providers: []
@@ -34,11 +34,11 @@ upstream_oauth2:
 clients:
   - client_id: "0000000000000000000SYNAPSE"
     client_auth_method: "client_secret_basic"
-    client_secret: ${MAS_CLIENT_SECRET}
+    client_secret: "${MAS_CLIENT_SECRET}"
 
 email:
-  from: '"Matrix" <noreply@${MAS_MATRIX_HOMESERVER}>'
-  reply_to: '"Matrix Support" <support@${MAS_MATRIX_HOMESERVER}>'
+  from: "\"Matrix\" <noreply@${MAS_MATRIX_HOMESERVER}>"
+  reply_to: "\"Matrix Support\" <support@${MAS_MATRIX_HOMESERVER}>"
   transport: blackhole
 
 passwords:
