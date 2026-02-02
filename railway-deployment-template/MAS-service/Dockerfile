@@ -3,7 +3,7 @@ FROM ghcr.io/matrix-org/matrix-authentication-service:latest
 RUN apk add --no-cache gettext
 
 COPY MAS-service/config.yaml.template /config.yaml.template
-COPY entrypoint.sh /entrypoint.sh
+COPY MAS-service/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE $PORT
