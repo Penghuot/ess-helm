@@ -5,8 +5,8 @@ echo "=================================================="
 echo "Synapse Railway Deployment - Starting"
 echo "=================================================="
 
-# Validate required environment variables
-REQUIRED_VARS="SYNAPSE_SERVER_NAME SYNAPSE_PUBLIC_BASEURL DATABASE_URL SYNAPSE_REGISTRATION_SHARED_SECRET SYNAPSE_MACAROON_SECRET_KEY SYNAPSE_FORM_SECRET SYNAPSE_SIGNING_KEY"
+# Required environment variables
+REQUIRED_VARS="SYNAPSE_SERVER_NAME SYNAPSE_PUBLIC_BASEURL DATABASE_URL SYNAPSE_REGISTRATION_SHARED_SECRET SYNAPSE_MACAROON_SECRET_KEY SYNAPSE_FORM_SECRET"
 
 for var in $REQUIRED_VARS; do
     eval value=\$$var
@@ -23,16 +23,23 @@ echo "Generating homeserver.yaml..."
 envsubst < /homeserver.yaml.template > /data/homeserver.yaml
 echo "✓ homeserver.yaml generated"
 
-# Copy log config (static file)
-cp /data/log.config.yaml /data/log.config.yaml
-echo "✓ log.config.yaml ready"
+# Generate log config file based on domain
+LOG_CONFIG_PATH="/data/${SYNAPSE_SERVER_NAME}.log.config"
+echo "Generating log config..."
+cp /data/log.config.yaml "$LOG_CONFIG_PATH"
+echo "✓ log config generated at $LOG_CONFIG_PATH"
 
-# Write signing key
+# Generate signing key file based on domain
 SIGNING_KEY_PATH="/data/${SYNAPSE_SERVER_NAME}.signing.key"
-echo "Writing signing key..."
-echo "$SYNAPSE_SIGNING_KEY" > "$SIGNING_KEY_PATH"
+echo "Generating signing key..."
+if [ -z "$SYNAPSE_SIGNING_KEY" ]; then
+    # Auto-generate if not provided
+    python -m synapse.app.homeserver --generate-keys "$SIGNING_KEY_PATH"
+else
+    echo "$SYNAPSE_SIGNING_KEY" > "$SIGNING_KEY_PATH"
+fi
 chmod 600 "$SIGNING_KEY_PATH"
-echo "✓ signing key written"
+echo "✓ signing key ready at $SIGNING_KEY_PATH"
 
 echo "=================================================="
 echo "Starting Synapse homeserver..."
