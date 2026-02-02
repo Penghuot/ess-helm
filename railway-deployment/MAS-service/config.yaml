@@ -33,7 +33,7 @@ secrets:
   encryption: "c07af15b849e23d6f9a1b4c8d2e6f0a3b7c1d5e9f3a7b1c5d9e3f7a1b5c9d3e7"
   keys:
     - kid: "default"
-      private_key: |
+      key: |
         -----BEGIN EC PRIVATE KEY-----
         MHcCAQEEIJGlh975aqLDMRj14FmkOb5BB89gS8q1EdWAqfTQAnozoAoGCCqGSM49
         AwEHoUQDQgAEvJtmvto/lxwcPKke1usYPJuJvp2eVVWeQt1e3/BUvZQuivHR40Sd
