@@ -28,7 +28,7 @@ database:
   name: psycopg2
   args:
     user: postgres
-    password: eEFsjzqXcmIBuvOWLPXXIPVLJQKlTOkC
+    password: LaRvPVJVvSpcCyYSlxTEhUIGjQykzjKc
     host: postgres.railway.internal
     port: 5432
     database: railway
