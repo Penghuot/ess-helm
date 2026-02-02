@@ -35,9 +35,7 @@ secrets:
     - kid: "default"
       private_key: |
         -----BEGIN EC PRIVATE KEY-----
-        MHcCAQEEIIGlh975aqLDMRj14FmkOb5BB89gS8q1EdWAqfTQAnozoAoGCCqGSM49
-        AwEHoUQDQgAE8m2a+2j+XHRw8qR7W6xg8m4m+nZ5VVZ5C3V7f8FS9lC6K8dHjRJ3
-        kLpZ3K8n8lZ7V7Z3kLpZ3K8n8lZ7Vg==
+        MC4CAQAwBQYDK2VwBCIEICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         -----END EC PRIVATE KEY-----
 
 email:
