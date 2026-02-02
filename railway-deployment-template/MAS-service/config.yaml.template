@@ -1,9 +1,3 @@
-# ============================================================================
-# MAS Configuration Template
-# ============================================================================
-# Environment variables are substituted at runtime by entrypoint.sh
-# ============================================================================
-
 http:
   public_base: ${MAS_PUBLIC_BASE}
   listeners:
@@ -27,7 +21,7 @@ secrets:
   keys:
     - kid: "default"
       key: |
-${MAS_SIGNING_KEY}
+        ${MAS_SIGNING_KEY}
 
 matrix:
   homeserver: ${MAS_MATRIX_HOMESERVER}
@@ -55,31 +49,20 @@ passwords:
 
 branding:
   service_name: "Matrix Authentication Service"
+
+rate_limit:
+  registration:
     burst: ${MAS_RATE_LIMIT_REGISTRATION_BURST:-3}
 
-# Captcha configuration (optional, for bot protection)
 captcha:
   enabled: ${MAS_CAPTCHA_ENABLED:-false}
-  # service: recaptcha
-  # site_key: ${RECAPTCHA_SITE_KEY}
-  # secret_key: ${RECAPTCHA_SECRET_KEY}
 
-# Telemetry (optional)
 telemetry:
   tracing:
     enabled: ${MAS_TRACING_ENABLED:-false}
-    # exporter: jaeger
-    # endpoint: http://jaeger:14268/api/traces
-  
   metrics:
     enabled: ${MAS_METRICS_ENABLED:-false}
-    # exporter: prometheus
-    # endpoint: 0.0.0.0:9090
 
-# Logging configuration
 logging:
-  # Log level: trace, debug, info, warn, error
   level: ${MAS_LOG_LEVEL:-info}
-  
-  # Log format: json, pretty, compact
   format: ${MAS_LOG_FORMAT:-json}

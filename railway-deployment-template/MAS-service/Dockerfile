@@ -1,12 +1,11 @@
 FROM ghcr.io/matrix-org/matrix-authentication-service:latest
 
-# Copy configuration template
+USER root
+RUN apt-get update && apt-get install -y gettext-base && rm -rf /var/lib/apt/lists/*
+
 COPY MAS-service/config.yaml.template /config.yaml.template
+COPY MAS-service/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Set config path for runtime
-ENV MAS_CONFIG_PATH=/config.yaml.template
-
-# Expose MAS port
 EXPOSE 8080
-
-# Use the default entrypoint from the MAS image
+ENTRYPOINT ["/entrypoint.sh"]

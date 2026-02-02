@@ -1,8 +1,8 @@
 {
   "default_server_config": {
     "m.homeserver": {
-      "base_url": "${ELEMENT_HOMESERVER_URL}",
-      "server_name": "${ELEMENT_HOMESERVER_NAME}"
+      "base_url": ${ELEMENT_HOMESERVER_URL},
+      "server_name": ${ELEMENT_HOMESERVER_NAME}
     }
   },
   "disable_custom_urls": false,
@@ -12,6 +12,6 @@
   "show_labs_settings": true,
   "default_theme": "light",
   "room_directory": {
-    "servers": ["matrix.org", "${ELEMENT_HOMESERVER_NAME}"]
+    "servers": ["matrix.org", ${ELEMENT_HOMESERVER_NAME}]
   }
 }
