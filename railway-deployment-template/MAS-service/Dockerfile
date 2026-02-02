@@ -7,7 +7,7 @@
 # - MAS_ENCRYPTION_SECRET, MAS_SIGNING_KEY
 # ============================================================================
 
-FROM ghcr.io/matrix-org/matrix-authentication-service:latest
+FROM ghcr.io/matrix-org/matrix-authentication-service:debian
 
 # Copy configuration template and entrypoint
 COPY MAS-service/config.yaml.template /config.yaml.template
@@ -16,5 +16,5 @@ COPY --chmod=755 MAS-service/entrypoint.sh /entrypoint.sh
 # Expose MAS port
 EXPOSE 8080
 
-# Use the entrypoint script directly (shebang will handle it)
+# Use the entrypoint script directly
 ENTRYPOINT ["/entrypoint.sh"]

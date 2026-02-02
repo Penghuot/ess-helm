@@ -33,11 +33,11 @@ well_known_ip_range_blacklist:
 database:
   name: psycopg2
   args:
-    user: ${PGUSER}
-    password: ${PGPASSWORD}
-    host: ${PGHOST}
+    user: "${PGUSER}"
+    password: "${PGPASSWORD}"
+    host: "${PGHOST}"
     port: ${PGPORT}
-    database: ${PGDATABASE}
+    database: "${PGDATABASE}"
     cp_min: 5
     cp_max: 10
   allow_unsafe_locale: true
@@ -45,8 +45,6 @@ database:
 
 # Stats reporting
 report_stats: ${SYNAPSE_REPORT_STATS:-true}
-
-# Secrets
 registration_shared_secret: "${SYNAPSE_REGISTRATION_SHARED_SECRET}"
 macaroon_secret_key: "${SYNAPSE_MACAROON_SECRET_KEY}"
 form_secret: "${SYNAPSE_FORM_SECRET}"
@@ -71,78 +69,6 @@ enable_registration_without_verification: ${SYNAPSE_ENABLE_REGISTRATION_WITHOUT_
 # Log configuration
 log_config: "/data/log.config.yaml"
 
-# Report stats (optional, set to false for privacy)
-report_stats: ${SYNAPSE_REPORT_STATS:-false}
-
 # Presence (can disable to reduce load)
 presence:
   enabled: ${SYNAPSE_PRESENCE_ENABLED:-true}
-
-# Retention policies (optional)
-retention:
-  enabled: false
-
-# Trusted key servers for federation
-trusted_key_servers:
-  - server_name: "matrix.org"
-
-# Password configuration (if not using MAS)
-password_config:
-  enabled: ${SYNAPSE_PASSWORD_ENABLED:-false}
-  localdb_enabled: ${SYNAPSE_LOCALDB_ENABLED:-false}
-  pepper: "${SYNAPSE_PASSWORD_PEPPER}"
-
-# Email configuration (optional, for password reset)
-email:
-  smtp_host: "${SMTP_HOST}"
-  smtp_port: ${SMTP_PORT:-587}
-  smtp_user: "${SMTP_USER}"
-  smtp_pass: "${SMTP_PASS}"
-  force_tls: true
-  require_transport_security: true
-  notif_from: "${EMAIL_FROM:-Matrix <noreply@example.com>}"
-  app_name: "${EMAIL_APP_NAME:-Matrix}"
-  enable_notifs: ${EMAIL_ENABLE_NOTIFS:-false}
-
-# Rate limiting (adjust based on your needs)
-rc_message:
-  per_second: 0.2
-  burst_count: 10
-
-rc_registration:
-  per_second: 0.17
-  burst_count: 3
-
-rc_login:
-  address:
-    per_second: 0.17
-    burst_count: 3
-  account:
-    per_second: 0.17
-    burst_count: 3
-  failed_attempts:
-    per_second: 0.17
-    burst_count: 3
-
-# Room complexity limits
-limit_remote_rooms:
-  enabled: true
-  complexity: 1.0
-  complexity_error: "This room is too complex for this server."
-
-# User directory
-user_directory:
-  enabled: true
-  search_all_users: false
-  prefer_local_users: true
-
-# Metrics (for monitoring)
-enable_metrics: ${SYNAPSE_ENABLE_METRICS:-false}
-metrics_port: 9000
-
-# Server notices (optional)
-server_notices:
-  system_mxid_localpart: notices
-  system_mxid_display_name: "Server Notices"
-  system_mxid_avatar_url: ""
-  room_name: "Server Notices"
