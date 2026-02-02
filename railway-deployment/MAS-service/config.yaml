@@ -32,8 +32,8 @@ clients:
 secrets:
   encryption: "c07af15b849e23d6f9a1b4c8d2e6f0a3b7c1d5e9f3a7b1c5d9e3f7a1b5c9d3e7"
   keys:
-    - kid: "default"
-      private_key: |
+    - id: "default"
+      key: |
         -----BEGIN EC PRIVATE KEY-----
         MC4CAQAwBQYDK2VwBCIEICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         -----END EC PRIVATE KEY-----
