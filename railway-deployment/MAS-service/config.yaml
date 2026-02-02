@@ -34,9 +34,7 @@ secrets:
   keys:
     - kid: "default"
       key: |
-        -----BEGIN PRIVATE KEY-----
-        MC4CAQAwBQYDK2VwBCIEIEu2Xlg32gjxlE/+y/2fTb9j+Mja1ZE6NSmjmIXHhR9i
-        -----END PRIVATE KEY-----
+
 email:
   from: '"Matrix" <noreply@synapse-production-e979.up.railway.app>'
   reply_to: '"Matrix Support" <support@synapse-production-e979.up.railway.app>'
