@@ -1,33 +1,117 @@
-Complete Railway Deployment Guide for Matrix Synapse + Element Web
-📋 Overview
-This guide converts the Element ESS Helm chart into a Railway-ready deployment with:
+# Railway Deployment Documentation
 
-Synapse (Matrix homeserver) as the main service
-Element Web as the web client
-PostgreSQL via Railway's managed database plugin
-Environment-based configuration (no Kubernetes/Helm)
-🗂️ Section 1: Project Structure
-Create this folder structure in your forked repo (or a new Railway-specific branch):
+Welcome! This folder contains **complete documentation** for your Matrix Synapse + MAS + Element Web deployment on Railway.
 
-railway-deployment/
-├── synapse/
-│   ├── Dockerfile
-│   ├── homeserver.yaml
-│   └── log.config.yaml
-├── element-web/
-│   ├── Dockerfile
-│   └── config.json
-└── README.md
-🐳 Section 2: Synapse Dockerfile
-File: railway-deployment/synapse/Dockerfile
+## 📚 Documentation Files
 
-⚙️ Section 3: Synapse Configuration
-File: railway-deployment/synapse/homeserver.yaml
+### 1. **DEPLOYMENT_DOCUMENTATION.md** ⭐ START HERE
+The comprehensive guide covering everything:
+- System overview and architecture
+- Detailed configuration for each service
+- Step-by-step deployment process
+- Verification and testing procedures
+- User management
+- Troubleshooting guide
+- Production next steps
 
-File: railway-deployment/synapse/log.config.yaml
+**→ Read this first for complete understanding**
 
-🌐 Section 4: Element Web Dockerfile
-File: railway-deployment/element-web/Dockerfile
+---
+
+### 2. **QUICK_REFERENCE.md** 🚀 FOR DAILY USE
+Fast reference guide with essential information:
+- Current service URLs and credentials
+- File structure and architecture
+- Common operations (restart, logs, test)
+- Quick troubleshooting
+- Useful commands
+
+**→ Use this for daily operations and quick checks**
+
+---
+
+### 3. **TECHNICAL_TROUBLESHOOTING.md** 🔧 FOR ADVANCED USERS
+In-depth technical guide:
+- Common issues with detailed solutions
+- Error messages explained
+- Advanced configuration
+- Performance optimization
+- Security hardening
+- Professional debugging
+
+**→ Use this for solving issues and optimization**
+
+---
+
+## 🎯 Quick Start
+
+### First Time Setup?
+1. Read **DEPLOYMENT_DOCUMENTATION.md** sections:
+   - Overview & Architecture
+   - Detailed Configuration
+   - Deployment Process
+2. Verify all services running
+3. Test endpoints
+4. Create first user
+
+### Doing Something Specific?
+1. **Quick operation?** → Check **QUICK_REFERENCE.md**
+2. **Configuration?** → Check **DEPLOYMENT_DOCUMENTATION.md**
+3. **Problem solving?** → Check **TECHNICAL_TROUBLESHOOTING.md**
+
+---
+
+## ✅ Current Status
+
+### Services Running
+- ✅ **Synapse**: https://synapse-production-e979.up.railway.app
+- ✅ **MAS**: https://mas-service-production.up.railway.app  
+- ✅ **Element Web**: https://ess-helm-production.up.railway.app
+
+### Databases
+- Synapse: `postgres.railway.internal:5432/railway`
+- MAS: `postgres-h2zw.railway.internal:5432/railway`
+
+---
+
+## 📖 How to Read This Documentation
+
+### By Role
+- **Administrator** → DEPLOYMENT_DOCUMENTATION + TECHNICAL_TROUBLESHOOTING
+- **Operator** → QUICK_REFERENCE for daily tasks
+- **Developer** → DEPLOYMENT_DOCUMENTATION for configuration
+- **End User** → Just use Element Web!
+
+### By Task
+- **Setup** → DEPLOYMENT_DOCUMENTATION "Deployment Process" section
+- **Operations** → QUICK_REFERENCE "Common Operations" section
+- **Troubleshooting** → TECHNICAL_TROUBLESHOOTING "Common Issues" section
+- **Security** → TECHNICAL_TROUBLESHOOTING "Security Hardening" section
+
+---
+
+## 🚀 What to Do Next
+
+1. **Immediate**: Test all services work
+2. **Today**: Create test users, verify functionality
+3. **Week 1**: Set up backups, configure custom domain
+4. **Month 1**: Move secrets to env vars, disable open registration
+5. **Production**: Full security hardening, monitoring setup
+
+See **DEPLOYMENT_DOCUMENTATION.md** "Next Steps" section for details.
+
+---
+
+## 📞 Need Help?
+
+1. **Check** QUICK_REFERENCE.md (common tasks)
+2. **Check** DEPLOYMENT_DOCUMENTATION.md (detailed info)
+3. **Check** TECHNICAL_TROUBLESHOOTING.md (error solutions)
+4. **Read** linked documentation (Matrix, Synapse, Railway docs)
+
+---
+
+**👉 Start with DEPLOYMENT_DOCUMENTATION.md →**
 
 📝 Section 5: Element Web Configuration
 File: railway-deployment/element-web/config.json
