@@ -1,37 +1,54 @@
 http:
-  public_base: "${MAS_PUBLIC_BASE}"
+  public_base: ${MAS_PUBLIC_BASE}
   listeners:
     - name: web
       binds:
-        - address: "0.0.0.0:8080"
+        - address: "0.0.0.0:${PORT}"
+      proxy_protocol: false
       resources:
+        - name: discovery
         - name: human
         - name: oauth
-        - name: discovery
         - name: compat
         - name: graphql
         - name: assets
 
 database:
-  uri: "${DATABASE_URL}"
+  uri: ${DATABASE_URL}
+
+matrix:
+  homeserver: ${MAS_MATRIX_HOMESERVER}
+  endpoint: ${MAS_MATRIX_ENDPOINT}
+  secret: ${MAS_MATRIX_SECRET}
+
+upstream_oauth2:
+  providers: []
+
+clients:
+  - client_id: ${MAS_MATRIX_CLIENT_ID}
+    client_auth_method: "client_secret_basic"
+    client_secret: ${MAS_MATRIX_SECRET}
 
 secrets:
-  encryption: "${MAS_ENCRYPTION_SECRET}"
+  encryption: ${MAS_ENCRYPTION_SECRET}
   keys:
     - kid: "default"
       key: |
-        ${MAS_SIGNING_KEY}
+        -----BEGIN EC PRIVATE KEY-----
+        MHcCAQEEIEESHxOh58JxiSsc7ripo/f0CxpLy36M9tJWnJmI4YvjoAoGCCqGSM49
+        AwEHoUQDQgAE3LPKIHA2pk8I2qUMlPjLEUPIhPDmXYyFm3GrHIqb19eM0cEvC7Er
+        TOBezK7hdwfArnRhMrqeyY2KZAMB0g5oSw==
+        -----END EC PRIVATE KEY-----
+email:
+  from: '"Matrix" <noreply@synapse-production-e979.up.railway.app>'
+  reply_to: '"Matrix Support" <support@synapse-production-e979.up.railway.app>'
+  transport: blackhole
 
-matrix:
-  homeserver: "${MAS_MATRIX_HOMESERVER}"
-  endpoint: "${MAS_MATRIX_ENDPOINT}"
-  secret: "${MAS_MATRIX_SECRET}"
+passwords:
+  enabled: true
+  schemes:
+    - version: 1
+      algorithm: argon2id
 
-clients:
-  - client_id: "0000000000000000000SYNAPSE"
-    client_auth_method: "client_secret_basic"
-    client_secret: "${MAS_CLIENT_SECRET}"
-
-logging:
-  level: "${MAS_LOG_LEVEL:-info}"
-  format: "${MAS_LOG_FORMAT:-json}"
+branding:
+  service_name: "Matrix Authentication Service"
