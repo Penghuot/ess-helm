@@ -29,7 +29,7 @@ database:
   args:
     user: postgres
     password: LaRvPVJVvSpcCyYSlxTEhUIGjQykzjKc
-    host: postgres.railway.internal
+    host: synapse-db.railway.internal
     port: 5432
     database: railway
     cp_min: 5
