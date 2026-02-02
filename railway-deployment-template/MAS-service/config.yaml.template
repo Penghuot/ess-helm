@@ -4,11 +4,10 @@ http:
     - name: web
       binds:
         - address: "0.0.0.0:8080"
-      proxy_protocol: false
       resources:
-        - name: discovery
         - name: human
         - name: oauth
+        - name: discovery
         - name: compat
         - name: graphql
         - name: assets
@@ -28,41 +27,11 @@ matrix:
   endpoint: "${MAS_MATRIX_ENDPOINT}"
   secret: "${MAS_MATRIX_SECRET}"
 
-upstream_oauth2:
-  providers: []
-
 clients:
   - client_id: "0000000000000000000SYNAPSE"
     client_auth_method: "client_secret_basic"
     client_secret: "${MAS_CLIENT_SECRET}"
 
-email:
-  from: "\"Matrix\" <noreply@${MAS_MATRIX_HOMESERVER}>"
-  reply_to: "\"Matrix Support\" <support@${MAS_MATRIX_HOMESERVER}>"
-  transport: blackhole
-
-passwords:
-  enabled: true
-  schemes:
-    - version: 1
-      algorithm: argon2id
-
-branding:
-  service_name: "Matrix Authentication Service"
-
-rate_limit:
-  registration:
-    burst: ${MAS_RATE_LIMIT_REGISTRATION_BURST:-3}
-
-captcha:
-  enabled: ${MAS_CAPTCHA_ENABLED:-false}
-
-telemetry:
-  tracing:
-    enabled: ${MAS_TRACING_ENABLED:-false}
-  metrics:
-    enabled: ${MAS_METRICS_ENABLED:-false}
-
 logging:
-  level: ${MAS_LOG_LEVEL:-info}
-  format: ${MAS_LOG_FORMAT:-json}
+  level: "${MAS_LOG_LEVEL:-info}"
+  format: "${MAS_LOG_FORMAT:-json}"
