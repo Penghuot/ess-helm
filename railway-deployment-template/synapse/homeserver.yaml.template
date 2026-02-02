@@ -1,0 +1,175 @@
+# ============================================================================
+# Synapse Configuration Template
+# ============================================================================
+# This is a template file that uses environment variables for all sensitive
+# values. The entrypoint.sh script will substitute ${VARIABLE} placeholders
+# with actual values from Railway environment variables.
+#
+# DO NOT hardcode secrets in this file!
+# ============================================================================
+
+# Server identification
+server_name: "${SYNAPSE_SERVER_NAME}"
+public_baseurl: "${SYNAPSE_PUBLIC_BASEURL}"
+
+# Listener configuration
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    bind_addresses: ['0.0.0.0']
+    resources:
+      - names: [client, federation]
+        compress: false
+
+# Database configuration (PostgreSQL)
+database:
+  name: psycopg2
+  args:
+    user: "${PGUSER}"
+    password: "${PGPASSWORD}"
+    database: "${PGDATABASE}"
+    host: "${PGHOST}"
+    port: ${PGPORT}
+    cp_min: 5
+    cp_max: 10
+  # Railway uses UTF-8 locale
+  allow_unsafe_locale: true
+
+# Media storage
+media_store_path: "/data/media_store"
+uploads_path: "/data/uploads"
+max_upload_size: "50M"
+max_image_pixels: "32M"
+
+# URL preview (optional, can disable to save resources)
+url_preview_enabled: true
+url_preview_ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+  - '::1/128'
+  - 'fe80::/10'
+  - 'fc00::/7'
+
+# Federation security
+federation_ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+  - '::1/128'
+  - 'fe80::/10'
+  - 'fc00::/7'
+
+# Registration settings (use environment variable for flexibility)
+enable_registration: ${SYNAPSE_ENABLE_REGISTRATION:-false}
+enable_registration_without_verification: ${SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION:-false}
+
+# Admin registration (for creating users via MAS or admin API)
+registration_shared_secret: "${SYNAPSE_REGISTRATION_SHARED_SECRET}"
+
+# Security secrets
+macaroon_secret_key: "${SYNAPSE_MACAROON_SECRET_KEY}"
+form_secret: "${SYNAPSE_FORM_SECRET}"
+
+# Signing keys for federation
+signing_key_path: "/data/signing.key"
+
+# Trust MAS for authentication
+experimental_features:
+  msc3861:
+    enabled: true
+    issuer: "${MAS_PUBLIC_BASE}"
+    client_id: "${MAS_CLIENT_ID}"
+    client_auth_method: client_secret_basic
+    client_secret: "${MAS_CLIENT_SECRET}"
+    admin_token: "${SYNAPSE_ADMIN_TOKEN}"
+    account_management_url: "${MAS_PUBLIC_BASE}account"
+
+# Performance tuning
+caches:
+  global_factor: 1.0
+  per_cache_factors:
+    get_users_who_share_room_with_user: 2.0
+
+# Logging
+log_config: "/config/log.config.yaml"
+
+# Report stats (optional, set to false for privacy)
+report_stats: ${SYNAPSE_REPORT_STATS:-false}
+
+# Presence (can disable to reduce load)
+presence:
+  enabled: ${SYNAPSE_PRESENCE_ENABLED:-true}
+
+# Retention policies (optional)
+retention:
+  enabled: false
+
+# Trusted key servers for federation
+trusted_key_servers:
+  - server_name: "matrix.org"
+
+# Password configuration (if not using MAS)
+password_config:
+  enabled: ${SYNAPSE_PASSWORD_ENABLED:-false}
+  localdb_enabled: ${SYNAPSE_LOCALDB_ENABLED:-false}
+  pepper: "${SYNAPSE_PASSWORD_PEPPER}"
+
+# Email configuration (optional, for password reset)
+email:
+  smtp_host: "${SMTP_HOST}"
+  smtp_port: ${SMTP_PORT:-587}
+  smtp_user: "${SMTP_USER}"
+  smtp_pass: "${SMTP_PASS}"
+  force_tls: true
+  require_transport_security: true
+  notif_from: "${EMAIL_FROM:-Matrix <noreply@example.com>}"
+  app_name: "${EMAIL_APP_NAME:-Matrix}"
+  enable_notifs: ${EMAIL_ENABLE_NOTIFS:-false}
+
+# Rate limiting (adjust based on your needs)
+rc_message:
+  per_second: 0.2
+  burst_count: 10
+
+rc_registration:
+  per_second: 0.17
+  burst_count: 3
+
+rc_login:
+  address:
+    per_second: 0.17
+    burst_count: 3
+  account:
+    per_second: 0.17
+    burst_count: 3
+  failed_attempts:
+    per_second: 0.17
+    burst_count: 3
+
+# Room complexity limits
+limit_remote_rooms:
+  enabled: true
+  complexity: 1.0
+  complexity_error: "This room is too complex for this server."
+
+# User directory
+user_directory:
+  enabled: true
+  search_all_users: false
+  prefer_local_users: true
+
+# Metrics (for monitoring)
+enable_metrics: ${SYNAPSE_ENABLE_METRICS:-false}
+metrics_port: 9000
+
+# Server notices (optional)
+server_notices:
+  system_mxid_localpart: notices
+  system_mxid_display_name: "Server Notices"
+  system_mxid_avatar_url: ""
+  room_name: "Server Notices"
