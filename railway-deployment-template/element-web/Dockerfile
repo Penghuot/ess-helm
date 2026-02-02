@@ -18,8 +18,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy configuration template and entrypoint
-COPY config.json.template /app/config.json.template
-COPY entrypoint.sh /entrypoint.sh
+COPY element-web/config.json.template /app/config.json.template
+COPY element-web/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Switch back to nginx user

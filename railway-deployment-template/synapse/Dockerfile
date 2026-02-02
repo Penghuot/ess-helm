@@ -27,9 +27,9 @@ RUN mkdir -p /data/media_store /data/uploads /config && \
     chown -R 991:991 /data /config
 
 # Copy configuration template and entrypoint script
-COPY --chown=991:991 homeserver.yaml.template /config/homeserver.yaml.template
-COPY --chown=991:991 log.config.yaml /config/log.config.yaml
-COPY --chmod=755 entrypoint.sh /entrypoint.sh
+COPY --chown=991:991 synapse/homeserver.yaml.template /config/homeserver.yaml.template
+COPY --chown=991:991 synapse/log.config.yaml /config/log.config.yaml
+COPY --chmod=755 synapse/entrypoint.sh /entrypoint.sh
 
 # Switch back to non-root user for security
 USER 991

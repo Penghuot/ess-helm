@@ -25,8 +25,8 @@ RUN apt-get update && \
 RUN mkdir -p /config && chown mas:mas /config
 
 # Copy configuration template and entrypoint
-COPY --chown=mas:mas config.yaml.template /config/config.yaml.template
-COPY --chmod=755 entrypoint.sh /entrypoint.sh
+COPY --chown=mas:mas MAS-service/config.yaml.template /config/config.yaml.template
+COPY --chmod=755 MAS-service/entrypoint.sh /entrypoint.sh
 
 # Switch back to MAS user
 USER mas
