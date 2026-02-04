@@ -1,4 +1,4 @@
-FROM vectorim/element-web:v1.11.80
+FROM vectorim/element-web:v1.11.86
 
 WORKDIR /app
 
