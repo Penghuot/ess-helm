@@ -66,13 +66,15 @@ enable_registration_without_verification: false
 # Log configuration (generic file under /data)
 log_config: "/data/synapse.log.config"
 
-# MSC3861: OAuth delegation to MAS (replaces oidc_providers)
-experimental_features:
-  msc3861:
-    enabled: true
+# Traditional OIDC with MAS (better Element Web support)
+oidc_providers:
+  - idp_id: mas
+    idp_name: "Matrix Authentication Service"
     issuer: "{{MAS_PUBLIC_URL}}"
-    account_management_url: "{{MAS_PUBLIC_URL}}/account"
     client_id: "{{MAS_CLIENT_ID}}"
-    client_auth_method: client_secret_basic
     client_secret: "{{MAS_CLIENT_SECRET}}"
-    admin_token: "{{MAS_MATRIX_SHARED_SECRET}}"
+    scopes: ["openid", "profile"]
+    user_mapping_provider:
+      config:
+        localpart_template: "{{ user.preferred_username }}"
+        display_name_template: "{{ user.name }}"
