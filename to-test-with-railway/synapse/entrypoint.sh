@@ -42,6 +42,9 @@ sed \
   /app/homeserver.template.yaml > /data/homeserver.yaml
 
 # DEBUG: Print MSC3861 section from generated config
+echo "=== DEBUG: Synapse Version ==="
+python -m synapse.app.homeserver --version || echo "Version check failed"
+echo ""
 echo "=== DEBUG: Generated MSC3861 Config ==="
 grep -A 10 "experimental_features:" /data/homeserver.yaml || echo "No experimental_features found!"
 echo "=== END DEBUG ==="
@@ -56,6 +59,14 @@ python -m synapse.app.homeserver \
   --config-path /data/homeserver.yaml \
   --generate-keys
 
-# 4) Start Synapse
+# 4) Validate config before starting
+echo "=== Validating Synapse config ==="
+python -m synapse.config.homeserver --config-path /data/homeserver.yaml || {
+  echo "ERROR: Config validation failed!"
+  cat /data/homeserver.yaml
+  exit 1
+}
+
+# 5) Start Synapse
 exec python -m synapse.app.homeserver \
   --config-path /data/homeserver.yaml
