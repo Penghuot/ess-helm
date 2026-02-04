@@ -31,6 +31,7 @@ clients:
     redirect_uris:
       - "{{MAS_MATRIX_PUBLIC_ENDPOINT}}/_synapse/client/oidc/callback"
       - "{{MAS_MATRIX_PUBLIC_ENDPOINT}}/_synapse/client/login/sso/redirect"
+      - "io.element.desktop://vector/webapp/"
 
 secrets:
   encryption: "{{MAS_ENCRYPTION_KEY}}"
