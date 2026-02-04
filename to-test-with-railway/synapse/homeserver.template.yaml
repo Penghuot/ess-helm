@@ -70,8 +70,8 @@ log_config: "/data/synapse.log.config"
 experimental_features:
   msc3861:
     enabled: true
-    issuer: "{{MAS_MATRIX_ENDPOINT}}"
-    account_management_url: "{{MAS_MATRIX_ENDPOINT}}/account"
+    issuer: "{{MAS_PUBLIC_URL}}"
+    account_management_url: "{{MAS_PUBLIC_URL}}/account"
     client_id: "{{MAS_CLIENT_ID}}"
     client_auth_method: client_secret_basic
     client_secret: "{{MAS_CLIENT_SECRET}}"
