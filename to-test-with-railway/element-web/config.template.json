@@ -3,14 +3,19 @@
     "m.homeserver": {
       "base_url": "{{ELEMENT_DEFAULT_HS}}",
       "server_name": "{{ELEMENT_DEFAULT_SERVER_NAME}}"
+    },
+    "m.identity_server": {
+      "base_url": "https://vector.im"
     }
   },
   "disable_custom_urls": true,
   "disable_guests": true,
-  "brand": "Element",
+  "brand": "{{ELEMENT_BRAND}}",
   "default_theme": "{{ELEMENT_DEFAULT_THEME}}",
   "show_labs_settings": true,
-  "features": {},
+  "features": {
+    "feature_oidc_native": true
+  },
   "setting_defaults": {
     "theme": "{{ELEMENT_DEFAULT_THEME}}"
   }
