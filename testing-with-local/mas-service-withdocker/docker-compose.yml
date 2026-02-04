@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: mas_user
+      POSTGRES_PASSWORD: mas_pass
+      POSTGRES_DB: mas_db
+    ports:
+      - "5433:5432"
+
+  migrate:
+    image: ghcr.io/element-hq/matrix-authentication-service:latest
+    depends_on:
+      - db
+    volumes:
+      - ./config.yaml:/etc/mas/config.yaml:ro
+    command: ["database", "migrate", "--config", "/etc/mas/config.yaml"]
+
+  mas:
+    image: ghcr.io/element-hq/matrix-authentication-service:latest
+    depends_on:
+      - migrate
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.yaml:/etc/mas/config.yaml:ro
+    command: ["server", "--config", "/etc/mas/config.yaml"]

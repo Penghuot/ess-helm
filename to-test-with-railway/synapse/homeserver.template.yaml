@@ -1,0 +1,88 @@
+# Server configuration
+server_name: "{{SYNAPSE_SERVER_NAME}}"
+public_baseurl: "{{SYNAPSE_PUBLIC_BASEURL}}"
+pid_file: /data/homeserver.pid
+
+# Listener configuration
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    bind_addresses: ["0.0.0.0"]
+    resources:
+      - names: [client, federation]
+        compress: false
+
+# Add direct well-known delegation
+well_known_ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+  - 'fe80::/10'
+  - 'fc00::/7'
+
+# Database configuration - PostgreSQL (templated)
+database:
+  name: psycopg2
+  args:
+    user: "{{SYNAPSE_DB_USER}}"
+    password: "{{SYNAPSE_DB_PASSWORD}}"
+    host: "{{SYNAPSE_DB_HOST}}"
+    port: {{SYNAPSE_DB_PORT}}
+    database: "{{SYNAPSE_DB_NAME}}"
+    cp_min: 5
+    cp_max: 10
+  allow_unsafe_locale: true
+  synchronous_commit: false
+
+# Stats reporting
+report_stats: true
+
+# Secrets - templated
+registration_shared_secret: "{{SYNAPSE_REGISTRATION_SHARED_SECRET}}"
+macaroon_secret_key: "{{SYNAPSE_MACAROON_SECRET_KEY}}"
+form_secret: "{{SYNAPSE_FORM_SECRET}}"
+
+# Signing key path (Synapse will auto-generate if missing)
+signing_key_path: "/data/signing.key"
+
+# Trusted key servers
+trusted_key_servers:
+  - server_name: "matrix.org"
+
+# Suppress key server warning for matrix.org
+suppress_key_server_warning: true
+
+# Media storage
+media_store_path: /data/media_store
+
+# Registration flags (templated)
+enable_registration: {{SYNAPSE_ENABLE_REGISTRATION}}
+enable_registration_without_verification: {{SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION}}
+
+# Log configuration (generic file under /data)
+log_config: "/data/synapse.log.config"
+
+# password_providers:
+#   - module: synapse.handlers.matrix_auth.MatrixAuthProvider
+#     config:
+#       endpoint: "{{MAS_MATRIX_ENDPOINT}}"
+#       shared_secret: "{{MAS_MATRIX_SHARED_SECRET}}"
+# vim:ft=yaml
+
+oidc_providers:
+  - idp_id: mas
+    idp_name: "Matrix Authentication Service"
+    issuer: "{{MAS_MATRIX_ENDPOINT}}"
+    client_id: "{{MAS_CLIENT_ID}}"
+    client_secret: "{{MAS_CLIENT_SECRET}}"
+    discover: true
+    scopes: ["openid", "profile"]
+    client_auth_method: "client_secret_basic"
+    user_mapping_provider:
+      config:
+        localpart_template: "{{ user.sub }}"
+        display_name_template: "{{ user.name }}"
+

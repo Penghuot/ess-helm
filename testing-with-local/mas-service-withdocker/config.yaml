@@ -1,0 +1,101 @@
+http:
+  listeners:
+    - name: web
+      resources:
+        - name: discovery
+        - name: human
+        - name: oauth
+        - name: compat
+        - name: graphql
+        - name: assets
+      binds:
+        - address: "[::]:8080"
+      proxy_protocol: false
+    - name: internal
+      resources:
+        - name: health
+      binds:
+        - host: localhost
+          port: 8081
+      proxy_protocol: false
+  trusted_proxies:
+    - 192.168.0.0/16
+    - 172.16.0.0/12
+    - 10.0.0.0/10
+    - 127.0.0.1/8
+    - fd00::/8
+    - ::1/128
+  public_base: http://[::]:8080/
+  issuer: http://[::]:8080/
+database:
+  uri: postgresql://mas_user:mas_pass@db:5432/mas_db
+  max_connections: 10
+  min_connections: 0
+  connect_timeout: 30
+  idle_timeout: 600
+  max_lifetime: 1800
+email:
+  from: '"Authentication Service" <root@localhost>'
+  reply_to: '"Authentication Service" <root@localhost>'
+  transport: blackhole
+secrets:
+  encryption: be2e591ee1a804de0b227d01792813c5c5ae8a692d587f6a677600a894b16240
+  keys:
+    - key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEpAIBAAKCAQEAsc+28sGXLqn8DqykxV+VCxSGRRkbcckcHUBE19O2szZDsGKf
+        qBpx/LYfXCrKNYqxTgj7YS7P7+PZ6iz0vNPcQxQdFGlcOZUmz6w7rR3RHmMK9KPG
+        bN9wUwjCLDjls+qfiAII73ENgE4xmDD7wxfXUC0sttxDNI8cZLlwozsgiNe8H/B+
+        8s3psLkIx3HYEWpcfzTic7ZqUJp2uvmEzb9yuZfdscJSdewF2m18EhSQRrnq27L2
+        61cv1Y41A4GouUU7xACt9F5qywg6mRFo+4Rgk2m8AOJ02WSf6TTcbeEwZcLaTU6c
+        JZzq569GfWG3NgZVcf34LYe3nmYT8OD3lwxNsQIDAQABAoIBAG9EHaVWwvXuZM4B
+        9rGTmD5wv3yps2TGhhM/zlSIJQGL6VuMu3+D3ORYStNv600J1t2P/U3Y70GcARbq
+        vtMSd/h5s6C8NXvK+5hknIs950fujkJ74YTrZOxwxKDLkeG95cpEC7dZtSsewyYL
+        MN/qIVAIlLxwpJVVIF1fNT7PlxJJci50GGYgD2Prs3+9uPap5MocAeiT5TK0pM1/
+        XxVLGuAWy6szAC04aUZmGZzdj7n1CV4aNfFv9hmTYzCmJxjNF+V4RPJvZw3aI1vm
+        HWQORDU+tbu3PImIn/uMYP+9ZSOqmXmt7IyE/7uTT1yQg0osvL8ZIpUg8RsileMu
+        VIIX5qkCgYEAzLf1r0hoDUrkYbXDXmo6oYcSOK20KkGq8PdAIieNEAmXAUCsfYl/
+        Yc1hXFawIsshJw6Mhw7SRoFrN7jKf7UXWaAdfo8cfLogu+/LVWlj6ZAyQAkxGb5c
+        e6MsVV1+0g5daFKSttQI1yofrIAukiB0jbIkEvREPa8IIkLgC1+ONEMCgYEA3lpF
+        DYBSRn5OdSItw/KNNQhitbrvn9ZxbfSJ2iyU46KYxvSbqOagti+vGZVebmjgmAkB
+        NQXeitv/wK2ZT40C0a6HmCaYJyN2MCHBRJwhFmVkItlC6gOKbFWjErFcO6bwNMo1
+        nuoR8mcPXV0lXNMM7JfNACoFzNVWklj38rf7sPsCgYAGY1MiRhMhHw4jUmWnQ49S
+        zQEvjZQKoYPxAvYYWr2XG4V/v4HiZPD5n0wDcp0KaOY+7sBJ0peTJaSv129SLtds
+        r4dcFKEh7zjoRGJG5wP8HMjEoMTMddky7nOKsmErstENWU5EsDcaZ7EXU+SgIK0i
+        YsWnZcHfXt/VGdsd37xzOwKBgQCHTPit4YKvIJaPUi/1BzgDqEmgedLsOSomlWH4
+        353t8nfywM+jdEsg8V0kPS8MEkdwXDJe2GZ1qq8yyK/8pzqq6v/ZhsqZLkvxt+iJ
+        3lOH9ER9rCS6j1MA3w9vBXuxVMDf7pe4ToiDL1E7J73fgRFhOnHlAq0q2jpmrTqb
+        eHbwVwKBgQCmP6CEGC+YtwF2kk2s2ryILCb+bwbCIMZSOKLlBDH5ShoghtNzNUBf
+        vPCaWKMNsyZ3Wtdeu3dl22vs6icgNFYtvExcYcTPxYbO8amMdYab4JrcEVRrwK01
+        Z7WdA6gMjqpQx/NPbj4zbbwEe+ZY8j6n+Jb7zhVJ2HJ/rqm16GQT8A==
+        -----END RSA PRIVATE KEY-----
+    - key: |
+        -----BEGIN EC PRIVATE KEY-----
+        MHcCAQEEIO8mDN6Ic9aAmBkVj0wdklQ7H2zkUe6YZlMlHXRPgiwyoAoGCCqGSM49
+        AwEHoUQDQgAE0t6KgVwZFXivToHKbGAnJ9j3HDZ2VeW+R4mOewlEIFj3MB4G7fz2
+        ORrGnHo2J6VGq9Bb6AhUK4rr2mqaX12GEg==
+        -----END EC PRIVATE KEY-----
+    - key: |
+        -----BEGIN EC PRIVATE KEY-----
+        MIGkAgEBBDAfYnOIRpt9cmFFgfJBOBia56F0rQZHT6rNyPgJeDNelR8713dP5UKx
+        u4yh7bXGBsOgBwYFK4EEACKhZANiAAQLEIAhcQn+rxBDpyH9XC86GYTh1lTPkOHE
+        z57y+QEfExYd4H/8qjOQF2sf4W6zoZknIToeaULDeyZqVf81wKVwFe/My7Z1BgmQ
+        p3waos8alUq4BrkvYLb1Yjml/qJKcCo=
+        -----END EC PRIVATE KEY-----
+    - key: |
+        -----BEGIN EC PRIVATE KEY-----
+        MHQCAQEEIJdUKn/O0DqshJIYEwEhZ23ce7pUmXKHjWSUhZ2dJpMNoAcGBSuBBAAK
+        oUQDQgAEP+C5gQwcSp7Z3xp6B5HxaL/9wFdN+BrP/te0pSjnptvB4VkdclS69M9z
+        CDHeJ0nkDqGceBcK4mqViGWO4HdFow==
+        -----END EC PRIVATE KEY-----
+passwords:
+  enabled: true
+  schemes:
+    - version: 1
+      algorithm: argon2id
+  minimum_complexity: 3
+matrix:
+  kind: synapse
+  homeserver: localhost:8008
+  secret: "nMXMz-q1xtz3t&~r+hetzWs,0O*VZ:QXIfuKmbNFC7tEt0Tq4x"
+  endpoint: http://localhost:8008/

@@ -1,0 +1,17 @@
+{
+  "default_server_config": {
+    "m.homeserver": {
+      "base_url": "{{ELEMENT_DEFAULT_HS}}",
+      "server_name": "{{ELEMENT_DEFAULT_SERVER_NAME}}"
+    }
+  },
+  "disable_custom_urls": true,
+  "disable_guests": true,
+  "brand": "Element",
+  "default_theme": "{{ELEMENT_DEFAULT_THEME}}",
+  "show_labs_settings": true,
+  "features": {},
+  "setting_defaults": {
+    "theme": "{{ELEMENT_DEFAULT_THEME}}"
+  }
+}

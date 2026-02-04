@@ -1,0 +1,51 @@
+http:
+  public_base: "{{MAS_PUBLIC_BASE}}"
+  listeners:
+    - name: web
+      binds:
+        - address: "0.0.0.0:8080"
+      proxy_protocol: false
+      resources:
+        - name: discovery
+        - name: human
+        - name: oauth
+        - name: compat
+        - name: graphql
+        - name: assets
+
+database:
+  uri: "{{MAS_DATABASE_URI}}"
+
+matrix:
+  homeserver: "{{MAS_MATRIX_HOMESERVER}}"
+  endpoint: "{{MAS_MATRIX_ENDPOINT}}"
+  secret: "{{MAS_MATRIX_SHARED_SECRET}}"
+
+upstream_oauth2:
+  providers: []
+
+clients:
+  - client_id: "{{MAS_CLIENT_ID}}"
+    client_auth_method: "client_secret_basic"
+    client_secret: "{{MAS_CLIENT_SECRET}}"
+
+secrets:
+  encryption: "{{MAS_ENCRYPTION_KEY}}"
+  keys:
+    - kid: "default"
+      key: |
+        {{MAS_SIGNING_KEY_INDENTED}}
+
+email:
+  from: '"Matrix" <noreply@{{MAS_EMAIL_DOMAIN}}>'
+  reply_to: '"Matrix Support" <support@{{MAS_EMAIL_DOMAIN}}>'
+  transport: blackhole
+
+passwords:
+  enabled: true
+  schemes:
+    - version: 1
+      algorithm: argon2id
+
+branding:
+  service_name: "Matrix Authentication Service"
