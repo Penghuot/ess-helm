@@ -11,7 +11,7 @@ listeners:
     x_forwarded: true
     bind_addresses: ["0.0.0.0"]
     resources:
-      - names: [client, federation]
+      - names: [client, federation, consent]
         compress: false
 
 # Add direct well-known delegation
@@ -30,7 +30,7 @@ database:
     user: "{{SYNAPSE_DB_USER}}"
     password: "{{SYNAPSE_DB_PASSWORD}}"
     host: "{{SYNAPSE_DB_HOST}}"
-    port: {{SYNAPSE_DB_PORT}}
+    port: { { SYNAPSE_DB_PORT } }
     database: "{{SYNAPSE_DB_NAME}}"
     cp_min: 5
     cp_max: 10
