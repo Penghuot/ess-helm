@@ -10,6 +10,10 @@ set -euo pipefail
 : "${SYNAPSE_DB_NAME:?Must set SYNAPSE_DB_NAME}"
 : "${SYNAPSE_MACAROON_SECRET_KEY:?Must set SYNAPSE_MACAROON_SECRET_KEY}"
 : "${SYNAPSE_FORM_SECRET:?Must set SYNAPSE_FORM_SECRET}"
+: "${MAS_MATRIX_ENDPOINT:?Must set MAS_MATRIX_ENDPOINT}"
+: "${MAS_CLIENT_ID:?Must set MAS_CLIENT_ID}"
+: "${MAS_CLIENT_SECRET:?Must set MAS_CLIENT_SECRET}"
+: "${MAS_MATRIX_SHARED_SECRET:?Must set MAS_MATRIX_SHARED_SECRET}"
 
 # Optional with defaults
 SYNAPSE_DB_PORT="${SYNAPSE_DB_PORT:-5432}"
@@ -37,8 +41,10 @@ sed \
   -e "s#{{SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION}}#${SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION}#g" \
   /app/homeserver.template.yaml > /data/homeserver.yaml
 
-  #   -e "s#{{MAS_MATRIX_ENDPOINT}}#${MAS_MATRIX_ENDPOINT}#g" \
-  # -e "s#{{MAS_MATRIX_SHARED_SECRET}}#${MAS_MATRIX_SHARED_SECRET}#g" \
+# DEBUG: Print MSC3861 section from generated config
+echo "=== DEBUG: Generated MSC3861 Config ==="
+grep -A 10 "experimental_features:" /data/homeserver.yaml || echo "No experimental_features found!"
+echo "=== END DEBUG ==="
 
 # 2) Copy generic log config into /data if not already there
 if [[ ! -f /data/synapse.log.config ]]; then
