@@ -30,7 +30,7 @@ database:
     user: "{{SYNAPSE_DB_USER}}"
     password: "{{SYNAPSE_DB_PASSWORD}}"
     host: "{{SYNAPSE_DB_HOST}}"
-    port: {{SYNAPSE_DB_PORT}}
+    port: { { SYNAPSE_DB_PORT } }
     database: "{{SYNAPSE_DB_NAME}}"
     cp_min: 5
     cp_max: 10
@@ -69,6 +69,7 @@ experimental_features:
   msc3861:
     enabled: true
     issuer: "{{MAS_MATRIX_ENDPOINT}}"
+    account_management_url: "{{MAS_MATRIX_ENDPOINT}}/account"
     client_id: "{{MAS_CLIENT_ID}}"
     client_auth_method: client_secret_basic
     client_secret: "{{MAS_CLIENT_SECRET}}"
