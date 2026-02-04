@@ -29,8 +29,8 @@ clients:
     client_auth_method: "client_secret_basic"
     client_secret: "{{MAS_CLIENT_SECRET}}"
     redirect_uris:
-      - "{{MAS_MATRIX_ENDPOINT}}/_synapse/client/oidc/callback"
-      - "{{MAS_MATRIX_ENDPOINT}}/_synapse/client/login/sso/redirect"
+      - "{{MAS_MATRIX_PUBLIC_ENDPOINT}}/_synapse/client/oidc/callback"
+      - "{{MAS_MATRIX_PUBLIC_ENDPOINT}}/_synapse/client/login/sso/redirect"
 
 secrets:
   encryption: "{{MAS_ENCRYPTION_KEY}}"
