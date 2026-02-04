@@ -28,6 +28,9 @@ clients:
   - client_id: "{{MAS_CLIENT_ID}}"
     client_auth_method: "client_secret_basic"
     client_secret: "{{MAS_CLIENT_SECRET}}"
+    redirect_uris:
+      - "{{MAS_MATRIX_ENDPOINT}}/_synapse/client/oidc/callback"
+      - "{{MAS_MATRIX_ENDPOINT}}/_synapse/client/login/sso/redirect"
 
 secrets:
   encryption: "{{MAS_ENCRYPTION_KEY}}"
@@ -40,6 +43,11 @@ email:
   from: '"Matrix" <noreply@{{MAS_EMAIL_DOMAIN}}>'
   reply_to: '"Matrix Support" <support@{{MAS_EMAIL_DOMAIN}}>'
   transport: blackhole
+
+account:
+  email_verification: disabled
+  password_registration_enabled: true
+  password_registration_email_required: false
 
 passwords:
   enabled: true

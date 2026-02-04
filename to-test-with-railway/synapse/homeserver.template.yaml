@@ -16,12 +16,12 @@ listeners:
 
 # Add direct well-known delegation
 well_known_ip_range_blacklist:
-  - '127.0.0.0/8'
-  - '10.0.0.0/8'
-  - '172.16.0.0/12'
-  - '192.168.0.0/16'
-  - 'fe80::/10'
-  - 'fc00::/7'
+  - "127.0.0.0/8"
+  - "10.0.0.0/8"
+  - "172.16.0.0/12"
+  - "192.168.0.0/16"
+  - "fe80::/10"
+  - "fc00::/7"
 
 # Database configuration - PostgreSQL (templated)
 database:
@@ -40,8 +40,7 @@ database:
 # Stats reporting
 report_stats: true
 
-# Secrets - templated
-registration_shared_secret: "{{SYNAPSE_REGISTRATION_SHARED_SECRET}}"
+# Secrets - templated (no registration_shared_secret - MAS handles registration)
 macaroon_secret_key: "{{SYNAPSE_MACAROON_SECRET_KEY}}"
 form_secret: "{{SYNAPSE_FORM_SECRET}}"
 
@@ -58,31 +57,19 @@ suppress_key_server_warning: true
 # Media storage
 media_store_path: /data/media_store
 
-# Registration flags (templated)
-enable_registration: {{SYNAPSE_ENABLE_REGISTRATION}}
-enable_registration_without_verification: {{SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION}}
+# Registration flags (disabled - using MAS for registration)
+enable_registration: false
+enable_registration_without_verification: false
 
 # Log configuration (generic file under /data)
 log_config: "/data/synapse.log.config"
 
-# password_providers:
-#   - module: synapse.handlers.matrix_auth.MatrixAuthProvider
-#     config:
-#       endpoint: "{{MAS_MATRIX_ENDPOINT}}"
-#       shared_secret: "{{MAS_MATRIX_SHARED_SECRET}}"
-# vim:ft=yaml
-
-oidc_providers:
-  - idp_id: mas
-    idp_name: "Matrix Authentication Service"
+# MSC3861: OAuth delegation to MAS (replaces oidc_providers)
+experimental_features:
+  msc3861:
+    enabled: true
     issuer: "{{MAS_MATRIX_ENDPOINT}}"
     client_id: "{{MAS_CLIENT_ID}}"
+    client_auth_method: client_secret_basic
     client_secret: "{{MAS_CLIENT_SECRET}}"
-    discover: true
-    scopes: ["openid", "profile"]
-    client_auth_method: "client_secret_basic"
-    user_mapping_provider:
-      config:
-        localpart_template: "{{ user.sub }}"
-        display_name_template: "{{ user.name }}"
-
+    admin_token: "{{MAS_MATRIX_SHARED_SECRET}}"
