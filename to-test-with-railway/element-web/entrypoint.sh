@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
 : "${ELEMENT_DEFAULT_HS:?Must set ELEMENT_DEFAULT_HS}"
 
