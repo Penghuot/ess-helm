@@ -16,6 +16,8 @@
   "brand": "Element",
   "default_theme": "{{ELEMENT_DEFAULT_THEME}}",
   "show_labs_settings": true,
+  "disable_guests": true,
+  "disable_login_language_selector": true,
   "features": {},
   "setting_defaults": {
     "theme": "{{ELEMENT_DEFAULT_THEME}}"
