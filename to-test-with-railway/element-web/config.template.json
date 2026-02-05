@@ -13,6 +13,11 @@
       "base_url": "{{MAS_URL}}"
     }
   },
+  "oidc_static_clients": {
+    "{{MAS_URL}}/": {
+      "client_id": "element-web"
+    }
+  },
   "brand": "Element",
   "default_theme": "{{ELEMENT_DEFAULT_THEME}}",
   "show_labs_settings": true,
