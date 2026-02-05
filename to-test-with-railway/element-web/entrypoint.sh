@@ -6,6 +6,10 @@ set -eu
 : "${MAS_URL:?Must set MAS_URL}"
 : "${ELEMENT_WEB_CLIENT_ID:?Must set ELEMENT_WEB_CLIENT_ID}"
 
+# Strip optional surrounding quotes from client ID
+ELEMENT_WEB_CLIENT_ID="${ELEMENT_WEB_CLIENT_ID%\"}"
+ELEMENT_WEB_CLIENT_ID="${ELEMENT_WEB_CLIENT_ID#\"}"
+
 # Optional defaults
 SERVER_NAME="${SERVER_NAME:-matrix-railway}"
 ELEMENT_DEFAULT_THEME="${ELEMENT_DEFAULT_THEME:-light}"

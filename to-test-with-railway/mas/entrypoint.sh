@@ -16,6 +16,12 @@ set -euo pipefail
 : "${ELEMENT_WEB_URL:?Must set ELEMENT_WEB_URL}"
 : "${ELEMENT_WEB_CLIENT_ID:?Must set ELEMENT_WEB_CLIENT_ID}"
 
+# Strip optional surrounding quotes from client IDs
+MAS_CLIENT_ID="${MAS_CLIENT_ID%\"}"
+MAS_CLIENT_ID="${MAS_CLIENT_ID#\"}"
+ELEMENT_WEB_CLIENT_ID="${ELEMENT_WEB_CLIENT_ID%\"}"
+ELEMENT_WEB_CLIENT_ID="${ELEMENT_WEB_CLIENT_ID#\"}"
+
 # Indent PEM key for YAML block and write to temp file
 printf '%s\n' "${MAS_SIGNING_KEY}" | sed 's/^/        /' > /tmp/signing_key.txt
 

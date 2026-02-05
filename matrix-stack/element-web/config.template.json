@@ -1,0 +1,17 @@
+{
+  "default_server_config": {
+    "m.homeserver": {
+      "base_url": "{{HOMESERVER_URL}}",
+      "server_name": "{{SERVER_NAME}}"
+    },
+    "m.identity_server": {
+      "base_url": "https://vector.im"
+    }
+  },
+  "brand": "Element",
+  "default_theme": "{{ELEMENT_DEFAULT_THEME}}",
+  "disable_guests": true,
+  "setting_defaults": {
+    "theme": "{{ELEMENT_DEFAULT_THEME}}"
+  }
+}
