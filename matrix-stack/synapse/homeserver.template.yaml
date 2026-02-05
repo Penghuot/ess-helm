@@ -18,7 +18,7 @@ database:
     user: "{{SYNAPSE_DB_USER}}"
     password: "{{SYNAPSE_DB_PASSWORD}}"
     host: "{{SYNAPSE_DB_HOST}}"
-    port: { { SYNAPSE_DB_PORT } }
+    port: {{SYNAPSE_DB_PORT}}
     database: "{{SYNAPSE_DB_NAME}}"
     cp_min: 5
     cp_max: 10
