@@ -1,4 +1,9 @@
 {
+  "default_server_config": {
+    "m.homeserver": {
+      "base_url": "https://synape-production-7433.up.railway.app"
+    }
+  },
   "brand": "Element",
   "default_theme": "{{ELEMENT_DEFAULT_THEME}}",
   "show_labs_settings": true,
