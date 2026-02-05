@@ -18,7 +18,9 @@
   "show_labs_settings": true,
   "disable_guests": true,
   "disable_login_language_selector": true,
-  "features": {},
+  "features": {
+    "feature_oidc_native_flow": true
+  },
   "setting_defaults": {
     "theme": "{{ELEMENT_DEFAULT_THEME}}"
   }
