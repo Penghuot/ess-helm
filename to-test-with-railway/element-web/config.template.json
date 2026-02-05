@@ -1,4 +1,5 @@
 {
+  "brand": "Element",
   "default_theme": "{{ELEMENT_DEFAULT_THEME}}",
   "show_labs_settings": true,
   "features": {},
