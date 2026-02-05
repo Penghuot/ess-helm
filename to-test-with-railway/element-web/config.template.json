@@ -15,7 +15,7 @@
   },
   "oidc_static_clients": {
     "{{MAS_URL}}/": {
-      "client_id": "element-web"
+      "client_id": "{{ELEMENT_WEB_CLIENT_ID}}"
     }
   },
   "brand": "Element",

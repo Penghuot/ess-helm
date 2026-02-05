@@ -14,6 +14,7 @@ set -euo pipefail
 : "${MAS_SIGNING_KEY:?Must set MAS_SIGNING_KEY (PEM, multi-line)}"
 : "${MAS_EMAIL_DOMAIN:?Must set MAS_EMAIL_DOMAIN}"
 : "${ELEMENT_WEB_URL:?Must set ELEMENT_WEB_URL}"
+: "${ELEMENT_WEB_CLIENT_ID:?Must set ELEMENT_WEB_CLIENT_ID}"
 
 # Indent PEM key for YAML block and write to temp file
 printf '%s\n' "${MAS_SIGNING_KEY}" | sed 's/^/        /' > /tmp/signing_key.txt
@@ -31,6 +32,7 @@ sed \
   -e "s#{{MAS_ENCRYPTION_KEY}}#${MAS_ENCRYPTION_KEY}#g" \
   -e "s#{{MAS_EMAIL_DOMAIN}}#${MAS_EMAIL_DOMAIN}#g" \
   -e "s#{{ELEMENT_WEB_URL}}#${ELEMENT_WEB_URL}#g" \
+  -e "s#{{ELEMENT_WEB_CLIENT_ID}}#${ELEMENT_WEB_CLIENT_ID}#g" \
   /app/config.template.yaml \
 | sed "/{{MAS_SIGNING_KEY_INDENTED}}/{
     r /tmp/signing_key.txt

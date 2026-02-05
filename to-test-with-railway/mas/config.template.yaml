@@ -31,7 +31,7 @@ clients:
     redirect_uris:
       - "{{MAS_MATRIX_PUBLIC_ENDPOINT}}/_synapse/client/oidc/callback"
       - "{{MAS_MATRIX_PUBLIC_ENDPOINT}}/_synapse/client/login/sso/redirect"
-  - client_id: "element-web"
+  - client_id: "{{ELEMENT_WEB_CLIENT_ID}}"
     client_auth_method: "none"
     redirect_uris:
       - "{{ELEMENT_WEB_URL}}/?no_universal_links=true"
