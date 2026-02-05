@@ -1,7 +1,16 @@
 {
   "default_server_config": {
     "m.homeserver": {
-      "base_url": "https://synape-production-7433.up.railway.app"
+      "base_url": "{{HOMESERVER_URL}}",
+      "server_name": "{{SERVER_NAME}}"
+    },
+    "m.identity_server": {
+      "base_url": "https://vector.im"
+    }
+  },
+  "auth": {
+    "mas": {
+      "base_url": "{{MAS_URL}}"
     }
   },
   "brand": "Element",

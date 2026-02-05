@@ -1,16 +1,21 @@
 #!/bin/sh
 set -eu
 
-: "${ELEMENT_DEFAULT_HS:?Must set ELEMENT_DEFAULT_HS}"
+# Require HOMESERVER_URL and MAS_URL to be set
+: "${HOMESERVER_URL:?Must set HOMESERVER_URL}"
+: "${MAS_URL:?Must set MAS_URL}"
 
-ELEMENT_DEFAULT_SERVER_NAME="${ELEMENT_DEFAULT_SERVER_NAME:-matrix-railway}"
+# Optional defaults
+SERVER_NAME="${SERVER_NAME:-matrix-railway}"
 ELEMENT_DEFAULT_THEME="${ELEMENT_DEFAULT_THEME:-light}"
 
+# Substitute placeholders in template
 sed \
-  -e "s#{{ELEMENT_DEFAULT_HS}}#${ELEMENT_DEFAULT_HS}#g" \
-  -e "s#{{ELEMENT_DEFAULT_SERVER_NAME}}#${ELEMENT_DEFAULT_SERVER_NAME}#g" \
+  -e "s#{{HOMESERVER_URL}}#${HOMESERVER_URL}#g" \
+  -e "s#{{SERVER_NAME}}#${SERVER_NAME}#g" \
+  -e "s#{{MAS_URL}}#${MAS_URL}#g" \
   -e "s#{{ELEMENT_DEFAULT_THEME}}#${ELEMENT_DEFAULT_THEME}#g" \
   /app/config.template.json > /app/config.json
 
-# Most element-web images use nginx; adjust if docs say otherwise.
+# Start nginx (default in element-web image)
 exec nginx -g "daemon off;"
