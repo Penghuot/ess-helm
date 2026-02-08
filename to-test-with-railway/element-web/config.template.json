@@ -14,12 +14,17 @@
     }
   },
   "org.matrix.msc4143.rtc_foci": [
-  {
-    "type": "livekit",
-    "livekit_service_url": "https://lk-jwt-service-production.up.railway.app/livekit/jwt"
-  }
-]
-,
+    {
+      "type": "livekit",
+      "livekit_service_url": "{{LK_JWT_SERVICE_URL}}"
+    }
+  ],
+  "element_call": {
+    "url": "{{ELEMENT_CALL_URL}}",
+    "use_exclusively": false,
+    "participant_limit": 8,
+    "brand": "Element Call"
+  },
   "oidc_static_clients": {
     "{{MAS_URL}}/": {
       "client_id": "{{ELEMENT_WEB_CLIENT_ID}}",
