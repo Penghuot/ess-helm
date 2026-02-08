@@ -17,7 +17,7 @@
   "oidc_static_clients": {
     "{{MAS_URL}}/": {
       "client_id": "{{ELEMENT_WEB_CLIENT_ID}}",
-      "redirect_uri": "https://web-element-production-1fad.up.railway.app/#/welcome"
+      "redirect_uri": "{{ELEMENT_WEB_URL}}/#/welcome"
     }
   },
   "element_call": {
