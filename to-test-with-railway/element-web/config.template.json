@@ -13,18 +13,20 @@
       "base_url": "{{MAS_URL}}"
     }
   },
-  
+  "org.matrix.msc4143.rtc_foci": [
+  {
+    "type": "livekit",
+    "livekit_service_url": "https://lk-jwt-service-production.up.railway.app/livekit/jwt"
+  }
+]
+,
   "oidc_static_clients": {
     "{{MAS_URL}}/": {
       "client_id": "{{ELEMENT_WEB_CLIENT_ID}}",
       "redirect_uri": "{{ELEMENT_WEB_URL}}/#/welcome"
     }
   },
-  "element_call": {
-    "url": "{{ELEMENT_CALL_URL}}",
-    "use_exclusively": false,
-    "participant_limit": 20
-  },
+
   "brand": "Element",
   "default_theme": "{{ELEMENT_DEFAULT_THEME}}",
   "show_labs_settings": true,
