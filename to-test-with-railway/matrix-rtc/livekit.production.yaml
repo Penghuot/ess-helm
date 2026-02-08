@@ -8,7 +8,6 @@ rtc:
   use_external_ip: true
   # TCP fallback for Railway (no UDP support)
   tcp_port: 7881
-  use_ice_tcp: true
 
 redis:
   # Using in-memory mode for Railway (single instance)
