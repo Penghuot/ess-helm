@@ -34,6 +34,7 @@ clients:
   - client_id: "{{ELEMENT_WEB_CLIENT_ID}}"
     client_auth_method: "none"
     redirect_uris:
+      - "{{ELEMENT_WEB_URL}}/"
       - "{{ELEMENT_WEB_URL}}/?no_universal_links=true"
 
 secrets:
