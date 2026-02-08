@@ -13,6 +13,12 @@ ELEMENT_WEB_CLIENT_ID="${ELEMENT_WEB_CLIENT_ID#\"}"
 # Optional defaults
 SERVER_NAME="${SERVER_NAME:-matrix-railway}"
 ELEMENT_DEFAULT_THEME="${ELEMENT_DEFAULT_THEME:-light}"
+ELEMENT_CALL_URL="${ELEMENT_CALL_URL:-}"
+
+echo "Configuring Element Web..."
+echo "Homeserver: $HOMESERVER_URL"
+echo "MAS: $MAS_URL"
+echo "Element Call: ${ELEMENT_CALL_URL:-Not configured}"
 
 # Substitute placeholders in template
 sed \
@@ -21,7 +27,10 @@ sed \
   -e "s#{{MAS_URL}}#${MAS_URL}#g" \
   -e "s#{{ELEMENT_WEB_CLIENT_ID}}#${ELEMENT_WEB_CLIENT_ID}#g" \
   -e "s#{{ELEMENT_DEFAULT_THEME}}#${ELEMENT_DEFAULT_THEME}#g" \
+  -e "s#{{ELEMENT_CALL_URL}}#${ELEMENT_CALL_URL}#g" \
   /app/config.template.json > /app/config.json
+
+echo "Element Web configured successfully!"
 
 # Start nginx (default in element-web image)
 exec nginx -g "daemon off;"

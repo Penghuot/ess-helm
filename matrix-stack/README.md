@@ -8,16 +8,16 @@ A minimal Matrix homeserver (Synapse) + Element Web stack for bot development.
 
 ### Synapse
 ```bash
-SYNAPSE_SERVER_NAME=your-synapse-url.up.railway.app
-SYNAPSE_PUBLIC_BASEURL=https://your-synapse-url.up.railway.app
+SYNAPSE_SERVER_NAME=matrix-production-f3b3.up.railway.app
+SYNAPSE_PUBLIC_BASEURL=https://matrix-production-f3b3.up.railway.app
 SYNAPSE_DB_USER=postgres
 SYNAPSE_DB_PASSWORD=your-db-password
 SYNAPSE_DB_HOST=your-db-host
 SYNAPSE_DB_PORT=5432
 SYNAPSE_DB_NAME=synapse
-SYNAPSE_MACAROON_SECRET_KEY=$(openssl rand -hex 32)
-SYNAPSE_FORM_SECRET=$(openssl rand -hex 32)
-SYNAPSE_REGISTRATION_SECRET=$(openssl rand -hex 32)
+SYNAPSE_MACAROON_SECRET_KEY=",x9tfEy20Iqc6q**02rhC75uB8Y=uCuMDBYV:QG*h,kid9@Upf"
+SYNAPSE_FORM_SECRET="sf,NGI9Tz#*Mb8ZqLMQr3seK.RE_sBD1S4#_#50CXyB2f.#pyh"
+SYNAPSE_REGISTRATION_SECRET="nMXMz-q1xtz3t&~r+hetzWs,0O*VZ:QXIfuKmbNFC7tEt0Tq4x"
 ```
 
 ### Element Web

@@ -18,13 +18,19 @@
       "client_id": "{{ELEMENT_WEB_CLIENT_ID}}"
     }
   },
+  "element_call": {
+    "url": "{{ELEMENT_CALL_URL}}",
+    "use_exclusively": false,
+    "participant_limit": 20
+  },
   "brand": "Element",
   "default_theme": "{{ELEMENT_DEFAULT_THEME}}",
   "show_labs_settings": true,
   "disable_guests": true,
   "disable_login_language_selector": true,
   "features": {
-    "feature_oidc_native_flow": true
+    "feature_oidc_native_flow": true,
+    "feature_element_call_video_rooms": true
   },
   "setting_defaults": {
     "theme": "{{ELEMENT_DEFAULT_THEME}}"

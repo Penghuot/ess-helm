@@ -1,0 +1,13 @@
+{
+  "default_server_config": {
+    "m.homeserver": {
+      "base_url": "{{HOMESERVER_URL}}",
+      "server_name": "{{SERVER_NAME}}"
+    }
+  },
+  "livekit": {
+    "livekit_service_url": "{{LIVEKIT_URL}}",
+    "livekit_jwt_service_url": "{{LIVEKIT_JWT_SERVICE_URL}}"
+  },
+  "app_name": "Element Call"
+}
