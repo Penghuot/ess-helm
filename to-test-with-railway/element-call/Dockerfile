@@ -4,9 +4,7 @@ FROM ghcr.io/element-hq/element-call:latest
 
 # Copy configuration files
 COPY config.template.json /app/config.template.json
-COPY entrypoint.sh /entrypoint.sh
-
-RUN chmod +x /entrypoint.sh
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
 WORKDIR /app
 
