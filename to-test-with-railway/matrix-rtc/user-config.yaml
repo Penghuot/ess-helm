@@ -1,3 +1,7 @@
 rtc:
   stun_servers:
     - "stun:stun.l.google.com:19302"
+
+keys:
+  - key: API2ea09991957ee6b2
+    secret: 84aad21549ff2c7e2e073e4726076ac6
