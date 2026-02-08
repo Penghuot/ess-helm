@@ -13,9 +13,11 @@
       "base_url": "{{MAS_URL}}"
     }
   },
+  
   "oidc_static_clients": {
     "{{MAS_URL}}/": {
-      "client_id": "{{ELEMENT_WEB_CLIENT_ID}}"
+      "client_id": "{{ELEMENT_WEB_CLIENT_ID}}",
+      "redirect_uri": "https://web-element-production-1fad.up.railway.app/#/welcome"
     }
   },
   "element_call": {
