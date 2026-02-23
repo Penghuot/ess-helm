@@ -61,5 +61,12 @@ passwords:
     - version: 1
       algorithm: argon2id
 
+experimental:
+  # Time-to-live of OAuth 2.0 access tokens in seconds. Defaults to 300.
+  access_token_ttl: 86400
+
+  # Time-to-live of compatibility access tokens in seconds. Defaults to 300.
+  compat_token_ttl: 86400
+
 branding:
   service_name: "Matrix Authentication Service"
