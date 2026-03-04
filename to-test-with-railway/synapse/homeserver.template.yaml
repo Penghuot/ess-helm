@@ -76,3 +76,6 @@ experimental_features:
     client_auth_method: client_secret_basic
     client_secret: "{{MAS_CLIENT_SECRET}}"
     admin_token: "{{MAS_MATRIX_SHARED_SECRET}}"
+
+app_service_config_files:
+  - "/data/registration.railway.production.yml"
