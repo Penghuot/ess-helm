@@ -41,12 +41,14 @@ sed \
   -e "s#{{SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION}}#${SYNAPSE_ENABLE_REGISTRATION_WITHOUT_VERIFICATION}#g" \
   /app/homeserver.template.yaml > /data/homeserver.yaml
 
-# DEBUG: Print MSC3861 section from generated config
+# DEBUG: Print key sections from generated config
 echo "=== DEBUG: Synapse Version ==="
 python -m synapse.app.homeserver --version || echo "Version check failed"
 echo ""
 echo "=== DEBUG: Generated MSC3861 Config ==="
-grep -A 10 "experimental_features:" /data/homeserver.yaml || echo "No experimental_features found!"
+sed -n '/^experimental_features:/,/^app_service_config_files:/p' /data/homeserver.yaml || true
+echo "=== DEBUG: Generated Appservice Config ==="
+sed -n '/^app_service_config_files:/,+3p' /data/homeserver.yaml || true
 echo "=== END DEBUG ==="
 
 # 2) Copy generic log config into /data if not already there
@@ -61,6 +63,10 @@ else
   echo "ERROR: /app/registration.railway.production.yml not found"
   exit 1
 fi
+
+echo "=== DEBUG: Appservice Registration File ==="
+ls -l /app/registration.railway.production.yml /data/registration.railway.production.yml
+echo "=== END DEBUG ==="
 
 # 3) Generate keys if missing
 python -m synapse.app.homeserver \
