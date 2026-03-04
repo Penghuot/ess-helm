@@ -54,6 +54,14 @@ if [[ ! -f /data/synapse.log.config ]]; then
   cp /app/synapse.log.config /data/synapse.log.config
 fi
 
+# 2b) Copy appservice registration file into /data
+if [[ -f /app/registration.railway.production.yml ]]; then
+  cp /app/registration.railway.production.yml /data/registration.railway.production.yml
+else
+  echo "ERROR: /app/registration.railway.production.yml not found"
+  exit 1
+fi
+
 # 3) Generate keys if missing
 python -m synapse.app.homeserver \
   --config-path /data/homeserver.yaml \
