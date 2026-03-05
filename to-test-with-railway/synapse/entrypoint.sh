@@ -56,16 +56,18 @@ if [[ ! -f /data/synapse.log.config ]]; then
   cp /app/synapse.log.config /data/synapse.log.config
 fi
 
-# 2b) Copy appservice registration file into /data
+# 2b) Ensure appservice registration file exists in /data
 if [[ -f /app/registration.railway.production.yml ]]; then
   cp /app/registration.railway.production.yml /data/registration.railway.production.yml
+elif [[ -f /data/registration.railway.production.yml ]]; then
+  echo "INFO: Using existing /data/registration.railway.production.yml"
 else
-  echo "ERROR: /app/registration.railway.production.yml not found"
+  echo "ERROR: registration file missing in both /app and /data"
   exit 1
 fi
 
 echo "=== DEBUG: Appservice Registration File ==="
-ls -l /app/registration.railway.production.yml /data/registration.railway.production.yml
+ls -l /app/registration.railway.production.yml /data/registration.railway.production.yml 2>/dev/null || true
 echo "=== END DEBUG ==="
 
 # 3) Generate keys if missing
