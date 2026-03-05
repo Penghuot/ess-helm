@@ -58,7 +58,20 @@ fi
 
 # 2b) Ensure appservice registration file exists in /data
 if [[ -f /app/registration.railway.production.yml ]]; then
-  cp /app/registration.railway.production.yml /data/registration.railway.production.yml
+  registration_src="/app/registration.railway.production.yml"
+
+  if grep -q '\${AS_TOKEN}' "$registration_src"; then
+    : "${AS_TOKEN:?Must set AS_TOKEN when registration file uses \${AS_TOKEN}}"
+  fi
+
+  if grep -q '\${HS_TOKEN}' "$registration_src"; then
+    : "${HS_TOKEN:?Must set HS_TOKEN when registration file uses \${HS_TOKEN}}"
+  fi
+
+  sed \
+    -e 's#${AS_TOKEN}#'"${AS_TOKEN:-}"'#g' \
+    -e 's#${HS_TOKEN}#'"${HS_TOKEN:-}"'#g' \
+    "$registration_src" > /data/registration.railway.production.yml
 elif [[ -f /data/registration.railway.production.yml ]]; then
   echo "INFO: Using existing /data/registration.railway.production.yml"
 else
