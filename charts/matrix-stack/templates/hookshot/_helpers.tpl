@@ -8,6 +8,9 @@ SPDX-License-Identifier: AGPL-3.0-only
 {{- $root := .root -}}
 {{- with required "element-io.hookshot.validations missing context" .context -}}
 {{ $messages := list }}
+{{- if not $root.Values.serverName -}}
+{{ $messages = append $messages "serverName is required when hookshot.enabled=true" }}
+{{- end }}
 {{- if and (not $root.Values.synapse.enabled) (not .ingress.host) -}}
 {{ $messages = append $messages "hookshot.ingress.host is required when hookshot.enabled=true and synapse.enabled=false" }}
 {{- end }}
@@ -118,7 +121,7 @@ REGISTRATION: {{ . | b64enc }}
     {{- range $key := (. | keys | uniq | sortAlpha) }}
       {{- $prop := index $root.Values.hookshot.additional $key }}
       {{- if $prop.config }}
-user-{{ $key }}: {{ $prop.config | b64enc }}
+user-{{ $key }}: {{ (tpl $prop.config $root) | b64enc }}
       {{- end }}
     {{- end }}
   {{- end }}

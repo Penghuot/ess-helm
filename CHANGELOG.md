@@ -7,6 +7,210 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 <!-- towncrier release notes start -->
 
+# ESS Community Helm Chart 26.2.3 (2026-02-26)
+
+## Added
+
+- Add a script to migrate existing Synapse configuration to ESS Community values.
+
+  - The script will generate a valid ESS Values file based on an existing Synapse configuration.
+  - The script supports automatically discovering secrets and outputs them to Kubernetes Secrets manifests.
+
+  (#1052, #1056, #1058)
+- Add `tlsTerminationOnPod` property to matrix-rtc TURN TLS service for external TLS termination support. (#1053)
+
+## Changed
+
+- Upgrade Matrix Authentication Service to v1.12.0.
+
+  Highlights:
+  - Allow `+` in usernames, as per the Matrix spec
+  - Fix compat token refresh giving back a consumed token
+  - Add a default `Message-ID` when sending emails
+
+  Full Changelogs:
+  - [v1.12.0](https://github.com/element-hq/matrix-authentication-service/releases/tag/v1.12.0)
+
+  (#1066)
+- Upgrade Element Web to v1.12.11.
+
+  Highlights:
+  - Update the room list visuals in order to have better contrast
+  - Remove server acl status/summaries from timeline
+
+  Full Changelogs:
+  - [v1.12.11](https://github.com/element-hq/element-web/releases/tag/v1.12.11)
+
+  (#1068)
+- Upgrade Synapse to v1.148.0.
+
+  Highlights:
+  - Support sending and receiving [MSC4354 Sticky Event](https://github.com/matrix-org/matrix-spec-proposals/pull/4354) metadata
+
+  Full Changelogs:
+  - [v1.148.0](https://github.com/element-hq/synapse/releases/tag/v1.148.0)
+
+  (#1069)
+
+## Fixed
+
+- Ensure all `Deployments` and `StatefulSets` have `restartPolicy: Always` in their `spec.template.spec` so that their `Pods` are always correctly restarted. (#1055)
+- Ensure all `Jobs` have `restartPolicy: Never` in their `spec.template.spec` so that failed `Pods` are kept around. (#1055)
+- Don't wait for the chart Synapse to be available to start Hookshot when an external Synapse is used. (#1062)
+
+## Documentation
+
+- Document how to troubleshoot Matrix RTC SFU connectivity. (#1051)
+
+## Internal
+
+- CI: Cache Helm OCI dependencies for the current week. (#1057, #1070)
+- CI: test that all references to `Services` in the chart exist. (#1062)
+- Make `scripts/assemble_ci_values_files_from_fragments.sh` use standard characters classes and not GNU extensions for improved portability. (#1063)
+- Allow passing of additional options when creating the `k3d` cluster. (#1064)
+- CI: Export k3d debug logs. (#1070)
+- CI: Do not setup cert-manager in integration tests as its only used for local testing. (#1070)
+- CI: Retry setting up prometheus operator CRDs to kill flakes. (#1072)
+- CI: Retry Turn TLS connectivity in case of unexpected EOF Errors. (#1073, #1074)
+- CI: Cache dependencies installed with asdf. (#1075)
+
+
+# ESS Community Helm Chart 26.2.2 (2026-02-18)
+
+## Changed
+
+- Upgrade Matrix Authentication Service to v1.11.0.
+
+  Highlights:
+  - Make the compat login SSO redirect query parameters ignore invalid values
+  - Clean up unsupported threepids from already deactivated users
+  - Cleanup finished OAuth 2.0 sessions
+  - Cleanup finished user/browser sessions
+  - Clear out last active IP on each session after 30 days
+
+  Full Changelogs:
+  - [v1.11.0](https://github.com/element-hq/matrix-authentication-service/releases/tag/v1.11.0)
+
+  (#1035)
+- Update `matrix-tools` base image to Debian 13.
+
+  For compatibility with syn2mas v1.11 (#1042)
+
+## Documentation
+
+- Update README diagram to represent Hookshot. (#1039)
+
+
+# ESS Community Helm Chart 26.2.1 (2026-02-13)
+
+## Changed
+
+- Upgrade Synapse to v1.147.1.
+
+  Highlights:
+  * Don't retry joining partial state rooms all at once on startup.
+  * Block federation requests and events authenticated using a known insecure signing key. See `CVE-2026-24044` / `ELEMENTSEC-2025-1670`.
+
+  Full Changelogs:
+  * [v1.147.0](https://github.com/element-hq/synapse/releases/tag/v1.147.0)
+
+  (#1031)
+- Upgrade Element Web to v1.12.10.
+
+  Highlights:
+  - Allow Element Call widgets to receive sticky events
+  - Add option for sorting by rooms with unread messages in the room list view
+
+  Full Changelogs:
+  - [v1.12.10](https://github.com/element-hq/element-web/releases/tag/v1.12.10)
+
+  (#1034)
+
+## Documentation
+
+- Document how to manually fix `CVE-2026-24044`/`ELEMENTSEC-2025-1670`. (#1037)
+
+## Internal
+
+- Add strict schema validation test for MAS config. (#1026, #1030)
+- Merge matrix-tools fixes related to `CVE-2026-24044` / `ELEMENTSEC-2025-1670` to main. (#1036)
+
+
+# ESS Community Helm Chart 26.2.0 (2026-02-05)
+
+## Changed
+
+- Set default permissions on Hookshot so that local users only have permissions to manage integrations and connections.
+
+  Permissions should be adjusted to give specific users the ability to administer integrations, e.g.
+  ```yaml
+  hookshot:
+    additional:
+      permissions.yaml:
+        config: |
+          permissions:
+          - actor: {{ $.Values.serverName | quote }}
+            services:
+            - service: "*"
+              level: manageConnections
+          - action: "@an-admin-user:{{ $.Values.serverName }}"
+            services:
+            - service: "*"
+              level: admin
+  ``` (#1010, #1014)
+- Update the test cluster values so that Hookshot can make requests to cluster-internal IP addresses. (#1010, #1018, #1023)
+
+## Fixed
+
+- Fix Hookshot widgets not being available when using the Synapse `Ingress` / not having a dedicated Hookshot `Ingress`. (#1010)
+
+## Internal
+
+- CI: Export logs of all k3d namespaces. (#1015)
+- CI: Remove code duplication that existed between `pytest` integration test suite and `setup_test_cluster.sh` script. (#1016, #1017)
+- CI: Use OCI repository to install `cert-manager` and `prometheus-operator-crds`. (#1020)
+- CI: Support `--rollback-on-failure` helm 4 parameter. (#1022)
+
+
+# ESS Community Helm Chart 26.1.3 (2026-01-28)
+
+## Changed
+
+- Upgrade Element Web to v1.12.9.
+
+  Highlights:
+  - Allow local log downloads instead of a bug report endpoint URL.
+  - Support for stable [MSC4191](https://github.com/matrix-org/matrix-spec-proposals/pull/4191) account management action parameter
+  - Support for stable m.oauth UIA stage from [MSC4312](https://github.com/matrix-org/matrix-spec-proposals/pull/4312)
+
+  Full Changelogs:
+  - [v1.12.9](https://github.com/element-hq/element-web/releases/tag/v1.12.9)
+
+  (#981)
+- Upgrade Matrix Authentication Service to v1.10.0.
+
+  Highlights:
+  - Support for stable [MSC3824](https://github.com/matrix-org/matrix-spec-proposals/pull/3824) (OAuth 2.0 API aware clients) values
+  - Support for stable [MSC4191](https://github.com/matrix-org/matrix-spec-proposals/pull/4191) account management actions
+  - Cleanup various old, soft-deleted entities from the database.
+
+  Full Changelogs:
+  - [v1.10.0](https://github.com/element-hq/matrix-authentication-service/releases/tag/v1.10.0)
+
+  (#990)
+- Upgrade Synapse to v1.146.0.
+
+  Highlights:
+  - Stabilise support for [MSC4312](https://github.com/matrix-org/matrix-spec-proposals/pull/4312)'s `m.oauth` User-Interactive Auth stage for resetting cross-signing identity with the OAuth 2.0 API.
+  - Fix joining a restricted v12 room locally when no local room creator is present but local users with sufficient power levels are.
+  - Fixed parallel calls to `/_matrix/media/v1/create` being rate-limited for appservices even if `rate_limited: false` was set in the registration.
+
+  Full Changelogs:
+  - [v1.146.0](https://github.com/element-hq/synapse/releases/tag/v1.146.0)
+
+  (#992)
+
+
 # ESS Community Helm Chart 26.1.2 (2026-01-27)
 
 ## Added

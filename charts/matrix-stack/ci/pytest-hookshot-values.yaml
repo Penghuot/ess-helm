@@ -17,6 +17,23 @@ haproxy:
   replicas: 2
 hookshot:
   additional:
+    permissions.yaml:
+      config: |
+        # Permissions are ordered this way so that we can easily see that they aren't appended to the default
+        # which is identical to the middle item in the array
+        permissions:
+        - actor: "@user1:{{ $.Values.serverName }}"
+          services:
+          - service: "*"
+            level: admin
+        - actor: {{ $.Values.serverName | quote }}
+          services:
+          - service: "*"
+            level: manageConnections
+        - actor: "@user2:{{ $.Values.serverName }}"
+          services:
+          - service: "*"
+            level: admin
     user-config.yaml:
       config: |
         generic:
@@ -25,6 +42,10 @@ hookshot:
           allowJsTransformationFunctions: false
           waitForComplete: true
           enableHttpGet: false
+          allowedIpRanges:
+          - 10.0.0.0/8
+          openIdOverrides:
+            {{ $.Values.serverName | quote }}: "http://{{- $.Release.Name }}-synapse.{{ $.Release.Namespace }}.svc.{{ $.Values.clusterDomain }}:8008"
   enableEncryption: true
   enabled: true
   extraEnv:
@@ -64,7 +85,7 @@ synapse:
       value: "1"
   ingress:
     host: synapse.{{ $.Values.serverName }}
-    tlsSecret: '{{ $.Release.Name }}-synapse-web-tls'
+    tlsSecret: "{{ $.Release.Name }}-synapse-web-tls"
   podSecurityContext:
     runAsGroup: 0
 wellKnownDelegation:

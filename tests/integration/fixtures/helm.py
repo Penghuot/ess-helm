@@ -159,7 +159,7 @@ retention:
     )
 
 
-@pytest.fixture(autouse=True, scope="session")
+@pytest.fixture(scope="session")
 async def matrix_stack(
     helm_client: pyhelm3.Client,
     ingress,
@@ -169,6 +169,10 @@ async def matrix_stack(
     generated_data: ESSData,
     loaded_matrix_tools: dict,
 ):
+    # If we do not have TEST_VALUES_FILE define, we skip setting up matrix-stack
+    if not os.environ.get("TEST_VALUES_FILE"):
+        return False
+
     with open(os.environ["TEST_VALUES_FILE"]) as stream:
         values = yaml.safe_load(stream)
 
@@ -227,6 +231,7 @@ def ingress_ready(cluster, kube_client: AsyncClient, matrix_stack, generated_dat
 
             if rule.host:
                 attempt = 0
+                last_exception = None
                 while attempt < 30:
                     try:
                         # Wait for the port and certificate to be available
@@ -237,13 +242,14 @@ def ingress_ready(cluster, kube_client: AsyncClient, matrix_stack, generated_dat
                         writer.close()
                         await writer.wait_closed()
                         break
-                    except (ConnectionResetError, ConnectionRefusedError, SSLCertVerificationError, TimeoutError):
+                    except (ConnectionResetError, ConnectionRefusedError, SSLCertVerificationError, TimeoutError) as e:
                         await asyncio.sleep(1)
                         attempt += 1
+                        last_exception = e
                 else:
                     raise Exception(
                         f"Unable to connect to Ingress/{generated_data.release_name}-{ingress_suffix}"
-                        " externally after 30s"
+                        f" externally after 30s. Last exception : {last_exception}"
                     )
 
     return _ingress_ready

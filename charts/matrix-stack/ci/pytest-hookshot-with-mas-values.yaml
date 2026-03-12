@@ -17,6 +17,23 @@ haproxy:
   replicas: 2
 hookshot:
   additional:
+    permissions.yaml:
+      config: |
+        # Permissions are ordered this way so that we can easily see that they aren't appended to the default
+        # which is identical to the middle item in the array
+        permissions:
+        - actor: "@user1:{{ $.Values.serverName }}"
+          services:
+          - service: "*"
+            level: admin
+        - actor: {{ $.Values.serverName | quote }}
+          services:
+          - service: "*"
+            level: manageConnections
+        - actor: "@user2:{{ $.Values.serverName }}"
+          services:
+          - service: "*"
+            level: admin
     user-config.yaml:
       config: |
         generic:
@@ -25,6 +42,10 @@ hookshot:
           allowJsTransformationFunctions: false
           waitForComplete: true
           enableHttpGet: false
+          allowedIpRanges:
+          - 10.0.0.0/8
+          openIdOverrides:
+            {{ $.Values.serverName | quote }}: "http://{{- $.Release.Name }}-synapse.{{ $.Release.Namespace }}.svc.{{ $.Values.clusterDomain }}:8008"
   enabled: true
   extraEnv:
     - name: DEBUG_RENDERING
@@ -41,14 +62,14 @@ initSecrets:
 matrixAuthenticationService:
   additional:
     000-pytest-admin:
-      configSecret: '{{ $.Release.Name }}-pytest-admin'
-      configSecretKey: admin.yaml
+      configSecret: "{{ $.Release.Name }}-pytest-admin"
+      configSecretKey: "admin.yaml"
   extraEnv:
     - name: DEBUG_RENDERING
       value: "1"
   ingress:
     host: mas.{{ $.Values.serverName }}
-    tlsSecret: '{{ $.Release.Name }}-mas-web-tls'
+    tlsSecret: "{{ $.Release.Name }}-mas-web-tls"
   podSecurityContext:
     runAsGroup: 0
   replicas: 2
@@ -79,7 +100,7 @@ synapse:
       value: "1"
   ingress:
     host: synapse.{{ $.Values.serverName }}
-    tlsSecret: '{{ $.Release.Name }}-synapse-web-tls'
+    tlsSecret: "{{ $.Release.Name }}-synapse-web-tls"
   podSecurityContext:
     runAsGroup: 0
 wellKnownDelegation:
